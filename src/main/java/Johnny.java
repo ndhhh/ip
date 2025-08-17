@@ -1,15 +1,43 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Johnny {
 
-    public static String greeting() {
+    private ArrayList<Task> tasks = new ArrayList<Task>();
+
+    public Johnny() {
+
+    }
+
+    public String greeting() {
         String line = "__________________________________________________";
         String name = "Johnny";
         
         return line + "\n" + "Hello! I'm " + name + "\nWhat can I do for you?\n" + line;
     }
 
-    public static void read() {
+    public String tasksToString() {
+        String line = "__________________________________________________";
+        StringBuilder result = new StringBuilder(line);
+        result.append("\n");
+
+        if (this.tasks.size() == 0) {
+            return "No tasks in list";
+        }
+
+        for (int i = 0; i < tasks.size(); i++)
+        {
+            int num = i + 1;
+            String str = String.format(". %s", tasks.get(i).toString());
+            result.append(num);
+            result.append(str);
+            result.append("\n");
+        }
+
+        return result.append(line).toString();
+    }
+
+    public void read() {
         String line = "__________________________________________________";
         Scanner sc = new Scanner(System.in);
         String input = "";
@@ -21,8 +49,11 @@ public class Johnny {
             {
                 System.out.println(line + "\nBye. Hope to see you again!\n" + line);
                 break;
+            } else if (input.equals("list")) {
+                System.out.println(this.tasksToString());
             } else {
-                System.out.println(line + "\n" + input + "\n" + line);
+                System.out.println(line + "\n" + "added: " + input + "\n" + line);
+                this.tasks.add(new Task(input));
             }
         }
 
@@ -31,7 +62,8 @@ public class Johnny {
     }
 
     public static void main(String[] args) {
-        System.out.println(Johnny.greeting());
-        Johnny.read();
+        Johnny johnny = new Johnny();
+        System.out.println(johnny.greeting());
+        johnny.read();
     }
 }
