@@ -9,5 +9,6 @@ public class Johnny {
 
     public static void main(String[] args) {
         System.out.println(Johnny.greeting());
+        // Test
     }
 }
