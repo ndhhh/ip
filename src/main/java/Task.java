@@ -1,6 +1,6 @@
 public class Task {
-    private String name;
-    private boolean completed;
+    protected String name;
+    protected boolean completed;
 
     public Task(String name) {
         this.name = name;
@@ -17,7 +17,7 @@ public class Task {
 
     @Override
     public String toString() {
-        if (completed) {
+        if (this.completed) {
             return "[X] " + this.name;
         } else {
             return "[ ] " + this.name;

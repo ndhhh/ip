@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Johnny {
 
-    private ArrayList<Task> tasks = new ArrayList<Task>();
+    private ArrayList<Task> tasks = new ArrayList<>();
     private final String LINE = "__________________________________________________";
 
     public Johnny() {
@@ -52,19 +52,101 @@ public class Johnny {
             } else if (input.startsWith("mark") || input.startsWith("unmark")) {
                 String[] strings = input.split(" ");
                 this.parseMark(strings);
-            }
-            else {
-                System.out.println(LINE + "\n" + "added: " + input + "\n" + LINE);
-                this.tasks.add(new Task(input));
+            } else if (input.startsWith("todo")) {
+                String[] strings = input.split(" ");
+                this.parseTodo(strings);
+            } else if (input.startsWith("deadline")) {
+                String[] strings = input.split("/by ");
+                this.parseDeadline(strings);
+            } else if (input.startsWith("event")) {
+                this.parseEvent(input);
+            } else {
+                System.out.println(LINE + "\n" + "Invalid command." + "\n" + LINE);
             }
         }
 
         sc.close();
     }
 
+    public void parseEvent(String input) {
+        String[] firstParse = input.split("/to ");
+        if (firstParse.length != 2) {
+            System.out.println(LINE + "\nThere is no/more than 1 event end time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            return;
+        }
+
+        String[] secondParse = firstParse[0].split("/from ");
+        if (secondParse.length != 2) {
+            System.out.println(LINE + "\nThere is no/more than 1 event start time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            return;
+        }
+
+        String[] eventName = secondParse[0].split(" ");
+        if (eventName.length < 2) {
+            System.out.println(LINE + "\nThere is no/more than 1 event name provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            return;
+        }
+
+        StringBuilder taskName = new StringBuilder();
+        for (int i = 1; i < eventName.length; i++) {
+            taskName.append(eventName[i]);
+            if (i < eventName.length - 1) {
+                taskName.append(" ");
+            }
+        }
+
+        Task eventTask = new EventTask(taskName.toString(), secondParse[1], firstParse[1]);
+        this.tasks.add(eventTask);
+        System.out.println(LINE + "\nTask added:\n   " + eventTask.toString() + "\nNow you have " + this.tasks.size() + " in the list.\n" + LINE);
+    }
+
+    public void parseDeadline(String[] strings) {
+        if (strings.length != 2) {
+            System.out.println(LINE + "\nThere is no/more than 1 deadline provided.\nPlease use the format: deadline [task name] /by [deadline]\n" + LINE);
+            return;
+        }
+
+        String[] firstHalf = strings[0].split(" ");
+        if (firstHalf.length < 2) {
+            System.out.println(LINE + "\nThere is no task name provided.\nPlease use the format: deadline [task name] /by [deadline]\n" + LINE);
+            return;
+        }
+
+        StringBuilder taskName = new StringBuilder();
+        for (int i = 1; i < firstHalf.length; i++) {
+            taskName.append(firstHalf[i]);
+            if (i < firstHalf.length - 1) {
+                taskName.append(" ");
+            }
+        }
+
+        Task deadlineTask = new DeadlineTask(taskName.toString(), strings[1].trim());
+        this.tasks.add(deadlineTask);
+        System.out.println(LINE + "\nTask added:\n   " + deadlineTask.toString() + "\nNow you have " + this.tasks.size() + " in the list.\n" + LINE);
+    }
+
+    public void parseTodo(String[] strings) {
+        if (strings.length < 2) {
+            System.out.println(LINE + "\nThe description of a task cannot be empty\n" + LINE);
+            return;
+        }
+
+        StringBuilder taskName = new StringBuilder();
+        for (int i = 1; i < strings.length; i++) {
+            taskName.append(strings[i]);
+            if (i < strings.length - 1) {
+                taskName.append(" ");
+            }
+        }
+
+        Task todoTask = new TodoTask(taskName.toString());
+        this.tasks.add(todoTask);
+        System.out.println(LINE + "\nTask added:\n   " + todoTask.toString() + "\nNow you have " + this.tasks.size() + " in the list.\n" + LINE);
+    }
+
     public void parseMark(String[] strings) {
         if (strings.length != 2) {
-            System.out.println("Mark should be accompanied by a number");
+            System.out.println(LINE + "\nMark should be accompanied by a number\n" + LINE);
             return;
         }
 
@@ -78,7 +160,7 @@ public class Johnny {
             return;
         }
 
-        if (num <= 0 || num >= tasks.size()) {
+        if (num < 0 || num >= tasks.size()) {
             System.out.println(LINE + "\n" + "The number you have inputted does not correspond to an item in the list. Please try again." + "\n" + LINE);
             return;
         }
