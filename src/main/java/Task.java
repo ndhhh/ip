@@ -7,8 +7,20 @@ public class Task {
         this.completed = false;
     }
 
+    public void markComplete() {
+        this.completed = true;
+    }
+
+    public void markIncomplete() {
+        this.completed = false;
+    }
+
     @Override
     public String toString() {
-        return this.name;
+        if (completed) {
+            return "[X] " + this.name;
+        } else {
+            return "[ ] " + this.name;
+        }
     }
 }
