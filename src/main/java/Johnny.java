@@ -49,23 +49,52 @@ public class Johnny {
                 break;
             } else if (input.equals("list")) {
                 System.out.println(this.tasksToString());
-            } else if (input.startsWith("mark") || input.startsWith("unmark")) {
+            } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
                 String[] strings = input.split(" ");
                 this.parseMark(strings);
-            } else if (input.startsWith("todo")) {
+            } else if (input.startsWith("todo ")) {
                 String[] strings = input.split(" ");
                 this.parseTodo(strings);
-            } else if (input.startsWith("deadline")) {
+            } else if (input.startsWith("deadline ")) {
                 String[] strings = input.split("/by ");
                 this.parseDeadline(strings);
-            } else if (input.startsWith("event")) {
+            } else if (input.startsWith("event ")) {
                 this.parseEvent(input);
+            } else if (input.startsWith("delete ")) {
+                this.parseDelete(input);
             } else {
                 System.out.println(LINE + "\n" + "Invalid command." + "\n" + LINE);
             }
         }
 
         sc.close();
+    }
+
+    public void parseDelete(String input) {
+        String[] strings = input.split(" ");
+        if (strings.length != 2) {
+            System.out.println(LINE + "\nThe delete command should be accompanied by a number\n" + LINE);
+            return;
+        }
+
+        int num = 0;
+
+        try {
+            num = Integer.parseInt(strings[1]);
+            num = num - 1;
+        } catch (NumberFormatException e) {
+            System.out.println(LINE + "\n" + "You did not input a number after your command. Please try again." + "\n" + LINE);
+            return;
+        }
+
+        if (num < 0 || num >= tasks.size()) {
+            System.out.println(LINE + "\n" + "The number you have inputted does not correspond to an item in the list. Please try again." + "\n" + LINE);
+            return;
+        }
+
+        Task t = tasks.get(num);
+        this.tasks.remove(num);
+        System.out.println(LINE + "\nTask has been removed:\n" + t.toString() + "\nYou now have " + tasks.size() + " tasks left in your list\n" + LINE);
     }
 
     public void parseEvent(String input) {
