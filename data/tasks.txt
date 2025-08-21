@@ -1,0 +1,4 @@
+T|1|Smell
+T|1|Touch
+D|0|CS2103T|29/09/2025
+E|0|Tiktok hackathon meetup|25/08/2025 12pm |5pm

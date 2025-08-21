@@ -3,6 +3,16 @@ public class TodoTask extends Task {
         super(name);
     }
 
+    public TodoTask(String name, boolean completed) {
+        super(name, completed);
+    }
+
+    @Override
+    public String getStoredString() {
+        if (completed) return "T|1|" + this.name;
+        return "T|0|" + this.name;
+    }
+
     @Override
     public String toString() {
         if (this.completed) {

@@ -6,6 +6,17 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    public DeadlineTask(String name, boolean completed, String deadline) {
+        super(name, completed);
+        this.deadline = deadline;
+    }
+
+    @Override 
+    public String getStoredString() {
+        if (completed) return "D|1|" + this.name + "|" + deadline;
+        return "D|0|" + this.name + "|" + deadline;
+    }
+
     @Override
     public String toString() {
         if (this.completed) {

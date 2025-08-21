@@ -5,12 +5,15 @@ public class Johnny {
 
     // ohohishsjdbs
 
-    
+    private String filePath;
     private ArrayList<Task> tasks = new ArrayList<>();
+    private Storage storage;
     private final String LINE = "__________________________________________________";
 
-    public Johnny() {
-
+    public Johnny(String filePath) {
+        this.filePath = filePath;
+        this.storage = new Storage(filePath);
+        this.tasks = this.storage.load();
     }
 
     public String greeting() {
@@ -46,8 +49,8 @@ public class Johnny {
         while (true)
         {
             input = sc.nextLine();
-            if (input.equals("bye"))
-            {
+            if (input.equals("bye")){
+                this.storage.save(tasks);
                 System.out.println(LINE + "\nBye. Hope to see you again!\n" + LINE);
                 break;
             } else if (input.equals("list")) {
@@ -209,7 +212,7 @@ public class Johnny {
     }
 
     public static void main(String[] args) {
-        Johnny johnny = new Johnny();
+        Johnny johnny = new Johnny("data/tasks.txt");
         System.out.println(johnny.greeting());
         johnny.read();
     }
