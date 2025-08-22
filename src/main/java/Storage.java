@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 
 public class Storage {
+    // Done
     private String filePath;
 
     public Storage(String filePath) {
