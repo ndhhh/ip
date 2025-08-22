@@ -34,7 +34,7 @@ public class Storage {
             while (sc.hasNextLine()) {
                 // While there are still lines to read, parse the lines into tasks
                 String nextLine = sc.nextLine();
-                String[] strings = nextLine.split("|");
+                String[] strings = nextLine.split("\\|");
                 String typeOfTask = strings[0];
                 boolean completed = strings[1].equals("1");
                 String taskName = strings[2];

@@ -21,7 +21,7 @@ public class Task {
     }
 
     public String getStoredString() {
-        if (completed) return "T|1|" + this.name;
+        if (completed) return "T-1-" + this.name;
         return "T|0|" + this.name;
     }
 
