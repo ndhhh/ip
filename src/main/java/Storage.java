@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class Storage {
@@ -14,7 +17,7 @@ public class Storage {
         this.filePath = filePath;
     }
     
-    public ArrayList<Task> load() {
+    public ArrayList<Task> load(Ui ui) {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(this.filePath);
 
@@ -47,13 +50,20 @@ public class Storage {
                     
                     case "D":
                         String deadline = strings[3];
-                        tasks.add(new DeadlineTask(taskName, completed, deadline));
+                        LocalDate date = Parser.parseDate(deadline, ui);
+                        if (date != null) {
+                            tasks.add(new DeadlineTask(taskName, completed, date));
+                        }
                         break;
                     
                     case "E":
                         String start = strings[3];
+                        LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
                         String end = strings[4];
-                        tasks.add(new EventTask(taskName, completed, start, end));
+                        LocalTime endTime = Parser.parseTime(end, ui);
+                        if (startDateTime != null && endTime!= null) {
+                            tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                        }
                         break;
                 }
             }
@@ -67,7 +77,7 @@ public class Storage {
         return tasks;
     } 
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(TaskList tasks) {
         File file = new File(this.filePath);
 
         if (!file.exists()) {
@@ -83,8 +93,7 @@ public class Storage {
 
         try (FileWriter fw = new FileWriter(file)) {
             for (int i = 0; i < tasks.size(); i++) {
-                Task current = tasks.get(i);
-                String storedTask = current.getStoredString();
+                String storedTask = tasks.getStoredString(i);
                 fw.write(storedTask + "\n");
             }
 
