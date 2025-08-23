@@ -1,3 +1,10 @@
+package johnny.commands;
+
+import johnny.storage.Storage;
+import johnny.tasklist.TaskList;
+import johnny.tasks.Task;
+import johnny.ui.Ui;
+
 public class DeleteCommand extends Command {
     protected int index; 
 

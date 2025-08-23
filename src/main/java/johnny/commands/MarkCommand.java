@@ -1,7 +1,13 @@
-public class UnmarkCommand extends Command {
+package johnny.commands;
+
+import johnny.storage.Storage;
+import johnny.tasklist.TaskList;
+import johnny.ui.Ui;
+
+public class MarkCommand extends Command {
     protected int index; 
 
-    public UnmarkCommand(int index) {
+    public MarkCommand(int index) {
         this.index = index;
     }
 
@@ -11,8 +17,7 @@ public class UnmarkCommand extends Command {
             ui.printInvalidNumberError();
             return;
         }
-        
-        tasks.markIncomplete(this.index);
+        tasks.markComplete(this.index);
         ui.printMarkMessage(tasks, this.index);
     }
 

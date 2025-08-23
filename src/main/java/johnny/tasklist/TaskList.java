@@ -1,4 +1,7 @@
+package johnny.tasklist;
 import java.util.ArrayList;
+
+import johnny.tasks.Task;
 
 public class TaskList {
     protected ArrayList<Task> tasks;
@@ -43,8 +46,8 @@ public class TaskList {
 
     public ArrayList<Task> findTasks(String subString) {
         ArrayList<Task> result = new ArrayList<>();
-        for (Task t : this.tasks) {
-            if (t.name.contains(subString)) {
+        for (Task t : tasks) {
+            if (t.contains(subString)) {
                 result.add(t);
             }
         }

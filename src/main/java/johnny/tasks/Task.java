@@ -1,3 +1,4 @@
+package johnny.tasks;
 public class Task {
     protected String name;
     protected boolean completed;
@@ -23,6 +24,10 @@ public class Task {
     public String getStoredString() {
         if (completed) return "T-1-" + this.name;
         return "T|0|" + this.name;
+    }
+
+    public boolean contains(String subString) {
+        return this.name.contains(subString);
     }
 
     @Override
