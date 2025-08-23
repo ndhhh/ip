@@ -1,5 +1,9 @@
+package johnny.ui;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import johnny.tasklist.TaskList;
+import johnny.tasks.Task;
 
 public class Ui {
     private static final String LINE = "__________________________________________________";

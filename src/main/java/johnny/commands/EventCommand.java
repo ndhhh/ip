@@ -1,5 +1,12 @@
+package johnny.commands;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import johnny.storage.Storage;
+import johnny.tasklist.TaskList;
+import johnny.tasks.EventTask;
+import johnny.tasks.Task;
+import johnny.ui.Ui;
 
 public class EventCommand extends Command {
     protected String name;

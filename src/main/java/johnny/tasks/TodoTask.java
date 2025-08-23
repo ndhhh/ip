@@ -1,3 +1,4 @@
+package johnny.tasks;
 public class TodoTask extends Task {
     public TodoTask(String name) {
         super(name);

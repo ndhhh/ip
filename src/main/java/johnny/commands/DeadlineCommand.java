@@ -1,4 +1,11 @@
+package johnny.commands;
 import java.time.LocalDate;
+
+import johnny.storage.Storage;
+import johnny.tasklist.TaskList;
+import johnny.tasks.DeadlineTask;
+import johnny.tasks.Task;
+import johnny.ui.Ui;
 
 public class DeadlineCommand extends Command {
     protected String name;

@@ -1,5 +1,10 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+package johnny;
+
+import johnny.commands.*;
+import johnny.parser.Parser;
+import johnny.storage.Storage;
+import johnny.tasklist.TaskList;
+import johnny.ui.Ui;
 
 public class Johnny {
 
