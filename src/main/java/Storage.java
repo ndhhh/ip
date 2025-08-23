@@ -94,7 +94,11 @@ public class Storage {
         try (FileWriter fw = new FileWriter(file)) {
             for (int i = 0; i < tasks.size(); i++) {
                 String storedTask = tasks.getStoredString(i);
-                fw.write(storedTask + "\n");
+                if (i == tasks.size() - 1) {
+                    fw.write(storedTask);
+                } else {
+                    fw.write(storedTask + "\n");
+                }
             }
 
             fw.close();
