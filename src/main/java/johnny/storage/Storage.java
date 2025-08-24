@@ -2,8 +2,12 @@ package johnny.storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
@@ -11,12 +15,6 @@ import johnny.tasks.EventTask;
 import johnny.tasks.Task;
 import johnny.tasks.TodoTask;
 import johnny.ui.Ui;
-
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 
 public class Storage {
@@ -54,27 +52,27 @@ public class Storage {
                 String taskName = strings[2];
 
                 switch (typeOfTask) {
-                    case "T":
-                        tasks.add(new TodoTask(taskName, completed));
-                        break;
-                    
-                    case "D":
-                        String deadline = strings[3];
-                        LocalDate date = Parser.parseDate(deadline, ui);
-                        if (date != null) {
-                            tasks.add(new DeadlineTask(taskName, completed, date));
-                        }
-                        break;
-                    
-                    case "E":
-                        String start = strings[3];
-                        LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
-                        String end = strings[4];
-                        LocalTime endTime = Parser.parseTime(end, ui);
-                        if (startDateTime != null && endTime!= null) {
-                            tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
-                        }
-                        break;
+                case "T":
+                    tasks.add(new TodoTask(taskName, completed));
+                    break;
+                
+                case "D":
+                    String deadline = strings[3];
+                    LocalDate date = Parser.parseDate(deadline, ui);
+                    if (date != null) {
+                        tasks.add(new DeadlineTask(taskName, completed, date));
+                    }
+                    break;
+                
+                case "E":
+                    String start = strings[3];
+                    LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
+                    String end = strings[4];
+                    LocalTime endTime = Parser.parseTime(end, ui);
+                    if (startDateTime != null && endTime!= null) {
+                        tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                    }
+                    break;
                 }
             }
             
