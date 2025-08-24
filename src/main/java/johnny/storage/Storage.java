@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
 import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
@@ -19,12 +20,19 @@ import johnny.ui.Ui;
 
 public class Storage {
     // Done
-    private String filePath;
+    private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-    
+    /**
+     * Returns an ArrayList<Task> that is populated from reading the filePath of the storage object.
+     * The ui argument refers to a Ui object that prints any errors from parsing the text file.
+     * 
+     * @param ui Ui object that prints any errors from parsing the text file / text interactions with the user
+     * @return an ArrayList<Task> that is passed into a TaskList 
+     * @see TaskList
+     */
     public ArrayList<Task> load(Ui ui) {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(this.filePath);
@@ -85,6 +93,13 @@ public class Storage {
         return tasks;
     } 
 
+    /**
+     * Takes a TaskList object and writes the Task objects as text 
+     * form into the filePath of the storage object.
+     * 
+     * @param tasks A TaskList object that provides the tasks to be saved into the file path
+     * @see TaskList
+     */
     public void save(TaskList tasks) {
         File file = new File(this.filePath);
 

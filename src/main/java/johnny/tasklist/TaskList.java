@@ -6,10 +6,20 @@ import johnny.tasks.Task;
 public class TaskList {
     protected ArrayList<Task> tasks;
 
+    /**
+     * Class constructor. Takes in an ArrayList<Task> to wrap in this TaskList object.
+     * @param tasks ArrayList<Task> passed into constructor
+     * @see Task
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Returns a task at a specified index in this TaskList object
+     * @param index Index of task to get
+     * @return Task gotten
+     */
     public Task getTask(int index) {
         return this.tasks.get(index);
     }
