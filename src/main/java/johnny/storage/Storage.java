@@ -1,9 +1,14 @@
 package johnny.storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
@@ -11,12 +16,6 @@ import johnny.tasks.EventTask;
 import johnny.tasks.Task;
 import johnny.tasks.TodoTask;
 import johnny.ui.Ui;
-
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * A class used in storing and loading tasks from the save file.
@@ -26,16 +25,20 @@ public class Storage {
     private String filePath;
 
     /**
-     * Constructs a new instance of Storage using the specified String, which is a file path.
+     * Constructs a new instance of Storage using the specified String, which is a
+     * file path.
+     * 
      * @param filePath String to the path of the save file
      */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-    
+
     /**
-     * Returns an ArrayList<Task> which is to be fed to a TaskList to instantiate it.
+     * Returns an ArrayList<Task> which is to be fed to a TaskList to instantiate
+     * it.
      * Loads tasks from the file specified by the file path.
+     * 
      * @param ui Ui object for printing messages
      * @return An ArrayList<Task>
      */
@@ -69,7 +72,7 @@ public class Storage {
                     case "T":
                         tasks.add(new TodoTask(taskName, completed));
                         break;
-                    
+
                     case "D":
                         String deadline = strings[3];
                         LocalDate date = Parser.parseDate(deadline, ui);
@@ -77,30 +80,31 @@ public class Storage {
                             tasks.add(new DeadlineTask(taskName, completed, date));
                         }
                         break;
-                    
+
                     case "E":
                         String start = strings[3];
                         LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
                         String end = strings[4];
                         LocalTime endTime = Parser.parseTime(end, ui);
-                        if (startDateTime != null && endTime!= null) {
+                        if (startDateTime != null && endTime != null) {
                             tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
                         }
                         break;
                 }
             }
-            
+
             sc.close();
 
         } catch (IOException | NoSuchElementException e) {
             System.out.println("Error reading file: " + e.getMessage());
-        } 
-        
+        }
+
         return tasks;
-    } 
+    }
 
     /**
      * Reads all tasks from the TaskList to the save file at the file path
+     * 
      * @param tasks TaskList instance containing tasks to be saved
      */
     public void save(TaskList tasks) {
@@ -133,4 +137,3 @@ public class Storage {
         }
     }
 }
-
