@@ -1,4 +1,5 @@
 package johnny.ui;
+
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -6,7 +7,8 @@ import johnny.tasklist.TaskList;
 import johnny.tasks.Task;
 
 /**
- * Ui class for handling interactions with the user, such as reading user input and printing messages
+ * Ui class for handling interactions with the user, such as reading user input
+ * and printing messages
  */
 public class Ui {
     private static final String LINE = "__________________________________________________";
@@ -29,6 +31,7 @@ public class Ui {
 
     /**
      * Reads from the user's input in System.in and returns the string read
+     * 
      * @return String read from user input
      */
     public String readCommand() {
@@ -38,11 +41,17 @@ public class Ui {
         } catch (IllegalStateException | NoSuchElementException e) {
             System.out.println("Error reading command: " + e.getMessage());
             return null;
-        } 
+        }
     }
 
     public void closeScanner() {
         sc.close();
+    }
+
+    public void printMessage(String string) {
+        this.printLine();
+        System.out.println(string);
+        this.printLine();
     }
 
     public void printGreeting() {
@@ -108,8 +117,14 @@ public class Ui {
         System.out.println(LINE + "\nThe description of a task cannot be empty\n" + LINE);
     }
 
+    public void printNoFindDescriptionError() {
+        System.out.println(LINE + "\nThe description of a task you are finding cannot be empty\n" + LINE);
+    }
+
     public void printDeadlineError() {
-        System.out.println(LINE + "\nThere is no/more than 1 deadline provided.\nPlease use the format: deadline [task name] /by [deadline]\n" + LINE);
+        System.out.println(LINE
+                + "\nThere is no/more than 1 deadline provided.\nPlease use the format: deadline [task name] /by [deadline]\n"
+                + LINE);
     }
 
     public void printDateError() {
@@ -120,6 +135,7 @@ public class Ui {
 
     /**
      * Prints the exception message when a date or time cannot be parsed
+     * 
      * @param e The exception thrown by the parser
      */
     public void printDateTimeException(Exception e) {

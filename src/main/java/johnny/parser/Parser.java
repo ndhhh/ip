@@ -1,4 +1,5 @@
 package johnny.parser;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import johnny.commands.Command;
 import johnny.commands.DeadlineCommand;
 import johnny.commands.DeleteCommand;
 import johnny.commands.EventCommand;
+import johnny.commands.FindCommand;
 import johnny.commands.ListCommand;
 import johnny.commands.MarkCommand;
 import johnny.commands.TodoCommand;
@@ -27,16 +29,18 @@ public class Parser {
 
     /**
      * Returns a Command based off the user input
+     * 
      * @param input
      * @param storage
      * @param tasks
      * @param ui
-     * @return A command that can be executed, or null otherwise if the input cannot be parsed
+     * @return A command that can be executed, or null otherwise if the input cannot
+     *         be parsed
      */
     public static Command read(String input, Storage storage, TaskList tasks, Ui ui) {
         if (input == null) {
             return null;
-        } else if (input.equals("bye")){
+        } else if (input.equals("bye")) {
             return new ByeCommand();
         } else if (input.equals("list")) {
             return new ListCommand();
@@ -50,14 +54,28 @@ public class Parser {
             return Parser.parseEvent(input, ui);
         } else if (input.startsWith("delete ")) {
             return Parser.parseDelete(input, ui);
+        } else if (input.startsWith("find ")) {
+            return Parser.parseFind(input, ui);
         } else {
             System.out.println(LINE + "\n" + "Invalid command." + "\n" + LINE);
             return null;
         }
     }
 
+    public static Command parseFind(String input, Ui ui) {
+        String[] strings = input.split(" ");
+        if (strings.length < 2) {
+            ui.printNoTaskNameError();
+            return null;
+        }
+
+        String searchString = input.substring(5);
+        return new FindCommand(searchString);
+    }
+
     /**
      * Returns a delete command after parsing the user input
+     * 
      * @param input
      * @param ui
      * @return A delete commmand if it can be parsed, null otherwise
@@ -78,12 +96,13 @@ public class Parser {
             ui.printInvalidNumberError();
             return null;
         }
-        
+
         return new DeleteCommand(num);
     }
 
     /**
      * Returns a event command after parsing the user input
+     * 
      * @param input
      * @param ui
      * @return A event commmand if it can be parsed, null otherwise
@@ -91,19 +110,25 @@ public class Parser {
     public static Command parseEvent(String input, Ui ui) {
         String[] firstParse = input.split("/to ");
         if (firstParse.length != 2) {
-            System.out.println(LINE + "\nThere is no/more than 1 event end time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            System.out.println(LINE
+                    + "\nThere is no/more than 1 event end time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
+                    + LINE);
             return null;
         }
 
         String[] secondParse = firstParse[0].split("/from ");
         if (secondParse.length != 2) {
-            System.out.println(LINE + "\nThere is no/more than 1 event start time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            System.out.println(LINE
+                    + "\nThere is no/more than 1 event start time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
+                    + LINE);
             return null;
         }
 
         String[] eventName = secondParse[0].split(" ");
         if (eventName.length < 2) {
-            System.out.println(LINE + "\nThere is no/more than 1 event name provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n" + LINE);
+            System.out.println(LINE
+                    + "\nThere is no/more than 1 event name provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
+                    + LINE);
             return null;
         }
 
@@ -129,6 +154,7 @@ public class Parser {
 
     /**
      * Returns a deadline command after parsing the user input
+     * 
      * @param input
      * @param ui
      * @return A deadline commmand if it can be parsed, null otherwise
@@ -173,7 +199,8 @@ public class Parser {
 
     /**
      * Returns a todo command after parsing the user input
-     * @param input 
+     * 
+     * @param input
      * @param ui
      * @return A todo commmand if it can be parsed, null otherwise
      */
@@ -198,7 +225,8 @@ public class Parser {
 
     /**
      * Returns a mark or unmark command after parsing the user input
-     * @param input 
+     * 
+     * @param input
      * @param ui
      * @return A mark or unmark commmand if it can be parsed, null otherwise
      */
@@ -228,7 +256,9 @@ public class Parser {
     }
 
     /**
-     * Returns a LocalDate from the string input. If the input cannot be parsed, returns null
+     * Returns a LocalDate from the string input. If the input cannot be parsed,
+     * returns null
+     * 
      * @param input String representation of the date
      * @param ui
      * @return date
@@ -245,7 +275,9 @@ public class Parser {
     }
 
     /**
-     * Returns a LocalDateTime from the string input. If the input cannot be parsed, returns null
+     * Returns a LocalDateTime from the string input. If the input cannot be parsed,
+     * returns null
+     * 
      * @param input String representation of the datetime
      * @param ui
      * @return date and time
@@ -262,7 +294,9 @@ public class Parser {
     }
 
     /**
-     * Returns a LocalTime from the string input. If the input cannot be parsed, returns null
+     * Returns a LocalTime from the string input. If the input cannot be parsed,
+     * returns null
+     * 
      * @param input String representation of the time
      * @param ui
      * @return time
