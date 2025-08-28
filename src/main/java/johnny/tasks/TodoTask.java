@@ -1,4 +1,8 @@
 package johnny.tasks;
+
+/**
+ * A task that does not have any deadline or timing requirement
+ */
 public class TodoTask extends Task {
     public TodoTask(String name) {
         super(name);
@@ -10,7 +14,8 @@ public class TodoTask extends Task {
 
     @Override
     public String getStoredString() {
-        if (completed) return "T|1|" + this.name;
+        if (completed)
+            return "T|1|" + this.name;
         return "T|0|" + this.name;
     }
 

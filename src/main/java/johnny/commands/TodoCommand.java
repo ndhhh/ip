@@ -6,9 +6,17 @@ import johnny.tasks.Task;
 import johnny.tasks.TodoTask;
 import johnny.ui.Ui;
 
+/**
+ * A command that adds a Todo task to the TaskList.
+ */
 public class TodoCommand extends Command {
     protected String name;
 
+    /**
+     * Creates a new TodoCommand with the specified task name.
+     * 
+     * @param name Name of task to be added.
+     */
     public TodoCommand(String name) {
         this.name = name;
     }
@@ -17,7 +25,7 @@ public class TodoCommand extends Command {
         return this.name;
     }
 
-    @Override 
+    @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new TodoTask(this.name);
         tasks.addTask(newTask);
