@@ -1,4 +1,5 @@
 package johnny.storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,20 +18,32 @@ import johnny.tasks.Task;
 import johnny.tasks.TodoTask;
 import johnny.ui.Ui;
 
-
+/**
+ * A class used in storing and loading tasks from the save file.
+ */
 public class Storage {
     // Done
     private final String filePath;
 
+    /**
+     * Constructs a new instance of Storage using the specified String, which is a
+     * file path.
+     * 
+     * @param filePath String to the path of the save file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
+
     /**
-     * Returns an ArrayList<Task> that is populated from reading the filePath of the storage object.
-     * The ui argument refers to a Ui object that prints any errors from parsing the text file.
+     * Returns an ArrayList<Task> that is populated from reading the filePath of the
+     * storage object.
+     * The ui argument refers to a Ui object that prints any errors from parsing the
+     * text file.
      * 
-     * @param ui Ui object that prints any errors from parsing the text file / text interactions with the user
-     * @return an ArrayList<Task> that is passed into a TaskList 
+     * @param ui Ui object that prints any errors from parsing the text file / text
+     *           interactions with the user
+     * @return an ArrayList<Task> that is passed into a TaskList
      * @see TaskList
      */
     public ArrayList<Task> load(Ui ui) {
@@ -60,44 +73,45 @@ public class Storage {
                 String taskName = strings[2];
 
                 switch (typeOfTask) {
-                case "T":
-                    tasks.add(new TodoTask(taskName, completed));
-                    break;
-                
-                case "D":
-                    String deadline = strings[3];
-                    LocalDate date = Parser.parseDate(deadline, ui);
-                    if (date != null) {
-                        tasks.add(new DeadlineTask(taskName, completed, date));
-                    }
-                    break;
-                
-                case "E":
-                    String start = strings[3];
-                    LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
-                    String end = strings[4];
-                    LocalTime endTime = Parser.parseTime(end, ui);
-                    if (startDateTime != null && endTime!= null) {
-                        tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
-                    }
-                    break;
+                    case "T":
+                        tasks.add(new TodoTask(taskName, completed));
+                        break;
+
+                    case "D":
+                        String deadline = strings[3];
+                        LocalDate date = Parser.parseDate(deadline, ui);
+                        if (date != null) {
+                            tasks.add(new DeadlineTask(taskName, completed, date));
+                        }
+                        break;
+
+                    case "E":
+                        String start = strings[3];
+                        LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
+                        String end = strings[4];
+                        LocalTime endTime = Parser.parseTime(end, ui);
+                        if (startDateTime != null && endTime != null) {
+                            tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                        }
+                        break;
                 }
             }
-            
+
             sc.close();
 
         } catch (IOException | NoSuchElementException e) {
             System.out.println("Error reading file: " + e.getMessage());
-        } 
-        
+        }
+
         return tasks;
-    } 
+    }
 
     /**
-     * Takes a TaskList object and writes the Task objects as text 
+     * Takes a TaskList object and writes the Task objects as text
      * form into the filePath of the storage object.
      * 
-     * @param tasks A TaskList object that provides the tasks to be saved into the file path
+     * @param tasks A TaskList object that provides the tasks to be saved into the
+     *              file path
      * @see TaskList
      */
     public void save(TaskList tasks) {
@@ -130,4 +144,3 @@ public class Storage {
         }
     }
 }
-

@@ -3,22 +3,44 @@ import java.util.ArrayList;
 
 import johnny.tasks.Task;
 
+/**
+ * A class that wraps an ArrayList<Task>. 
+ * This class provides many operations to edit the nested ArrayList
+ */
 public class TaskList {
     protected ArrayList<Task> tasks;
 
     /**
+<<<<<<< HEAD
      * Class constructor. Takes in an ArrayList<Task> to wrap in this TaskList object.
      * @param tasks ArrayList<Task> passed into constructor
      * @see Task
+=======
+     * Constructs a new TaskList instance using the ArrayList<Task> passed in
+     * @param tasks ArrayList<Task> to be wrapped in the instance
+>>>>>>> master
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
     /**
+<<<<<<< HEAD
      * Returns a task at a specified index in this TaskList object
      * @param index Index of task to get
      * @return Task gotten
+=======
+     * Constucts a new TaskList instance with an empty ArrayList
+     */
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
+
+    /** 
+     * Gets a Task at the given index of the wrapped ArrayList
+     * @param index The index to search at
+     * @return The task at that index
+>>>>>>> master
      */
     public Task getTask(int index) {
         return this.tasks.get(index);
@@ -50,10 +72,20 @@ public class TaskList {
         return this.tasks.size();
     }
 
+    /**
+     * Returns the string format of the task that is used to store in the saved file
+     * @param index The index to search at
+     * @return The stored string format
+     */
     public String getStoredString(int index) {
         return this.tasks.get(index).getStoredString();
     }
 
+    /**
+     * Returns an ArrayList of tasks that have their name containing the given substring
+     * @param subString 
+     * @return ArrayList of tasks
+     */
     public ArrayList<Task> findTasks(String subString) {
         ArrayList<Task> result = new ArrayList<>();
         for (Task t : tasks) {
@@ -65,6 +97,11 @@ public class TaskList {
         return result;
     }
 
+    /**
+     * Returns a String of tasks that have their name containing the given substring
+     * @param subString
+     * @return String describing all matching tasks
+     */
     public String findTasksToString(String subString) {
         ArrayList<Task> matching = this.findTasks(subString);
         TaskList temp = new TaskList(matching);

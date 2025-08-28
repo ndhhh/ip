@@ -16,6 +16,14 @@ public class DeadlineCommand extends Command {
         this.deadline = deadline;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public LocalDate getDeadline() {
+        return this.deadline;
+    }
+
     @Override 
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new DeadlineTask(this.name, this.deadline);
