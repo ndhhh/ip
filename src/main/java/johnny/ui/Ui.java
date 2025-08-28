@@ -5,19 +5,32 @@ import java.util.Scanner;
 import johnny.tasklist.TaskList;
 import johnny.tasks.Task;
 
+/**
+ * Ui class for handling interactions with the user, such as reading user input and printing messages
+ */
 public class Ui {
     private static final String LINE = "__________________________________________________";
     private static final String NAME = "Johnny";
     private Scanner sc;
 
+    /**
+     * Creates a new Ui object with a scanner to detect user input
+     */
     public Ui() {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Prints a new line
+     */
     public void printLine() {
         System.out.println(LINE);
     }
 
+    /**
+     * Reads from the user's input in System.in and returns the string read
+     * @return String read from user input
+     */
     public String readCommand() {
         try {
             String fullCommand = sc.nextLine();
@@ -105,6 +118,10 @@ public class Ui {
         this.printLine();
     }
 
+    /**
+     * Prints the exception message when a date or time cannot be parsed
+     * @param e The exception thrown by the parser
+     */
     public void printDateTimeException(Exception e) {
         this.printLine();
         System.out.println("Problem with parsing date/time: " + e.getMessage());

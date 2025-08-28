@@ -3,6 +3,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A Task that refers to a particular event that falls on a day with a start and end time.
+ */
 public class EventTask extends Task {
     protected LocalDateTime start;
     protected LocalTime end;
@@ -11,20 +14,41 @@ public class EventTask extends Task {
     protected static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    /**
+     * Creates a new EventTask with the given name, start date and time, and the end time
+     * @param name
+     * @param start
+     * @param end
+     */
     public EventTask(String name, LocalDateTime start, LocalTime end) {
         super(name);
         this.start = start;
         this.end = end;
         this.formattedStart = start.format(dateTimeFormatter);
         this.formattedEnd = end.format(timeFormatter);
-    }
+    }  
 
+    /**
+     * Creates a new EventTask with the given boolean on whether it is done
+     * @param name
+     * @param completed
+     * @param start
+     * @param end
+     */
     public EventTask(String name, boolean completed, LocalDateTime start, LocalTime end) {
         super(name, completed);
         this.start = start;
         this.end = end;
         this.formattedStart = start.format(dateTimeFormatter);
         this.formattedEnd = end.format(timeFormatter);
+    }
+
+    public LocalDateTime getStart() {
+        return this.start;
+    }
+
+    public LocalTime getEnd() {
+        return this.end;
     }
 
     @Override 

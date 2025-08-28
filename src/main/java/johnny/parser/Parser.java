@@ -6,9 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import johnny.tasklist.TaskList;
-
 import johnny.ui.Ui;
-
 import johnny.commands.ByeCommand;
 import johnny.commands.Command;
 import johnny.commands.DeadlineCommand;
@@ -20,10 +18,21 @@ import johnny.commands.TodoCommand;
 import johnny.commands.UnmarkCommand;
 import johnny.storage.Storage;
 
+/**
+ * A helper class that provides useful methods to parse a command/date
+ */
 public class Parser {
 
     private static final String LINE = "__________________________________________________";
 
+    /**
+     * Returns a Command based off the user input
+     * @param input
+     * @param storage
+     * @param tasks
+     * @param ui
+     * @return A command that can be executed, or null otherwise if the input cannot be parsed
+     */
     public static Command read(String input, Storage storage, TaskList tasks, Ui ui) {
         if (input == null) {
             return null;
@@ -47,6 +56,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a delete command after parsing the user input
+     * @param input
+     * @param ui
+     * @return A delete commmand if it can be parsed, null otherwise
+     */
     public static Command parseDelete(String input, Ui ui) {
         String[] strings = input.split(" ");
         if (strings.length != 2) {
@@ -67,6 +82,12 @@ public class Parser {
         return new DeleteCommand(num);
     }
 
+    /**
+     * Returns a event command after parsing the user input
+     * @param input
+     * @param ui
+     * @return A event commmand if it can be parsed, null otherwise
+     */
     public static Command parseEvent(String input, Ui ui) {
         String[] firstParse = input.split("/to ");
         if (firstParse.length != 2) {
@@ -106,6 +127,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a deadline command after parsing the user input
+     * @param input
+     * @param ui
+     * @return A deadline commmand if it can be parsed, null otherwise
+     */
     public static Command parseDeadline(String input, Ui ui) {
         String[] strings = input.split("/by ");
 
@@ -144,6 +171,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a todo command after parsing the user input
+     * @param input 
+     * @param ui
+     * @return A todo commmand if it can be parsed, null otherwise
+     */
     public static Command parseTodo(String input, Ui ui) {
         String[] strings = input.split(" ");
 
@@ -163,6 +196,12 @@ public class Parser {
         return new TodoCommand(taskName.toString());
     }
 
+    /**
+     * Returns a mark or unmark command after parsing the user input
+     * @param input 
+     * @param ui
+     * @return A mark or unmark commmand if it can be parsed, null otherwise
+     */
     public static Command parseMark(String input, Ui ui) {
         String[] strings = input.split(" ");
 
@@ -188,6 +227,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalDate from the string input. If the input cannot be parsed, returns null
+     * @param input String representation of the date
+     * @param ui
+     * @return date
+     */
     public static LocalDate parseDate(String input, Ui ui) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
@@ -199,6 +244,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalDateTime from the string input. If the input cannot be parsed, returns null
+     * @param input String representation of the datetime
+     * @param ui
+     * @return date and time
+     */
     public static LocalDateTime parseDateTime(String input, Ui ui) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         try {
@@ -210,6 +261,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a LocalTime from the string input. If the input cannot be parsed, returns null
+     * @param input String representation of the time
+     * @param ui
+     * @return time
+     */
     public static LocalTime parseTime(String input, Ui ui) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         try {

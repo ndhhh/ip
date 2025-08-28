@@ -13,6 +13,10 @@ public class TodoCommand extends Command {
         this.name = name;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override 
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new TodoTask(this.name);

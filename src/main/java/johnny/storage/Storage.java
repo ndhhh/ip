@@ -18,15 +18,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
+/**
+ * A class used in storing and loading tasks from the save file.
+ */
 public class Storage {
     // Done
     private String filePath;
 
+    /**
+     * Constructs a new instance of Storage using the specified String, which is a file path.
+     * @param filePath String to the path of the save file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
     
+    /**
+     * Returns an ArrayList<Task> which is to be fed to a TaskList to instantiate it.
+     * Loads tasks from the file specified by the file path.
+     * @param ui Ui object for printing messages
+     * @return An ArrayList<Task>
+     */
     public ArrayList<Task> load(Ui ui) {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(this.filePath);
@@ -87,6 +99,10 @@ public class Storage {
         return tasks;
     } 
 
+    /**
+     * Reads all tasks from the TaskList to the save file at the file path
+     * @param tasks TaskList instance containing tasks to be saved
+     */
     public void save(TaskList tasks) {
         File file = new File(this.filePath);
 

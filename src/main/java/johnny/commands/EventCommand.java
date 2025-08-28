@@ -1,4 +1,5 @@
 package johnny.commands;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -17,6 +18,18 @@ public class EventCommand extends Command {
         this.name = name;
         this.start = start;
         this.end = end;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public LocalDateTime getStart() {
+        return this.start;
+    }
+
+    public LocalTime getEnd() {
+        return this.end;
     }
 
     @Override
