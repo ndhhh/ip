@@ -11,14 +11,25 @@ public class TaskList {
     protected ArrayList<Task> tasks;
 
     /**
+<<<<<<< HEAD
+     * Class constructor. Takes in an ArrayList<Task> to wrap in this TaskList object.
+     * @param tasks ArrayList<Task> passed into constructor
+     * @see Task
+=======
      * Constructs a new TaskList instance using the ArrayList<Task> passed in
      * @param tasks ArrayList<Task> to be wrapped in the instance
+>>>>>>> master
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
     /**
+<<<<<<< HEAD
+     * Returns a task at a specified index in this TaskList object
+     * @param index Index of task to get
+     * @return Task gotten
+=======
      * Constucts a new TaskList instance with an empty ArrayList
      */
     public TaskList() {
@@ -29,6 +40,7 @@ public class TaskList {
      * Gets a Task at the given index of the wrapped ArrayList
      * @param index The index to search at
      * @return The task at that index
+>>>>>>> master
      */
     public Task getTask(int index) {
         return this.tasks.get(index);

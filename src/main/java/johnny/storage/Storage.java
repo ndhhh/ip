@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
 import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
@@ -22,7 +23,7 @@ import johnny.ui.Ui;
  */
 public class Storage {
     // Done
-    private String filePath;
+    private final String filePath;
 
     /**
      * Constructs a new instance of Storage using the specified String, which is a
@@ -35,12 +36,15 @@ public class Storage {
     }
 
     /**
-     * Returns an ArrayList<Task> which is to be fed to a TaskList to instantiate
-     * it.
-     * Loads tasks from the file specified by the file path.
+     * Returns an ArrayList<Task> that is populated from reading the filePath of the
+     * storage object.
+     * The ui argument refers to a Ui object that prints any errors from parsing the
+     * text file.
      * 
-     * @param ui Ui object for printing messages
-     * @return An ArrayList<Task>
+     * @param ui Ui object that prints any errors from parsing the text file / text
+     *           interactions with the user
+     * @return an ArrayList<Task> that is passed into a TaskList
+     * @see TaskList
      */
     public ArrayList<Task> load(Ui ui) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -103,9 +107,12 @@ public class Storage {
     }
 
     /**
-     * Reads all tasks from the TaskList to the save file at the file path
+     * Takes a TaskList object and writes the Task objects as text
+     * form into the filePath of the storage object.
      * 
-     * @param tasks TaskList instance containing tasks to be saved
+     * @param tasks A TaskList object that provides the tasks to be saved into the
+     *              file path
+     * @see TaskList
      */
     public void save(TaskList tasks) {
         File file = new File(this.filePath);
