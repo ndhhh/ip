@@ -15,9 +15,6 @@ import johnny.tasklist.TaskList;
 import johnny.ui.Ui;
 
 public class Johnny {
-
-    // ohohishsjdbs
-
     private String filePath;
     private Ui ui;
     private TaskList tasks;
