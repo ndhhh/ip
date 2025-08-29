@@ -30,10 +30,10 @@ public class Parser {
     /**
      * Returns a Command based off the user input
      * 
-     * @param input
-     * @param storage
-     * @param tasks
-     * @param ui
+     * @param input   User input read
+     * @param storage Storage for reading and writing into the save file
+     * @param tasks   Task List for editing
+     * @param ui      UI object that prints out messages
      * @return A command that can be executed, or null otherwise if the input cannot
      *         be parsed
      */
