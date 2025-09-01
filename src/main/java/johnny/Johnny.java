@@ -1,33 +1,37 @@
 package johnny;
 
 import johnny.commands.Command;
-import johnny.commands.DeadlineCommand;
-import johnny.commands.ByeCommand;
-import johnny.commands.DeleteCommand;
-import johnny.commands.EventCommand;
-import johnny.commands.ListCommand;
-import johnny.commands.TodoCommand;
-import johnny.commands.MarkCommand;
-import johnny.commands.UnmarkCommand;
+
 import johnny.parser.Parser;
 import johnny.storage.Storage;
 import johnny.tasklist.TaskList;
 import johnny.ui.Ui;
 
+/**
+ * This class is the main class of the bot, starts the bot process by running it
+ */
 public class Johnny {
-    private String filePath;
     private Ui ui;
     private TaskList tasks;
     private Storage storage;
-    private final String LINE = "__________________________________________________";
 
+    /**
+     * Creates a new instance of Johnny with the specified file path to read and
+     * write from storage
+     * 
+     * @param filePath File path of storage text file
+     */
     public Johnny(String filePath) {
-        this.filePath = filePath;
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.tasks = new TaskList(this.storage.load(this.ui));
     }
 
+    /**
+     * Runs the bot, starts by printing a greeting. The other packages like Ui
+     * handle the reading of commands
+     * or parsing and storing and saving tasks
+     */
     public void run() {
         this.ui.printGreeting();
         boolean isBye = false;
@@ -44,40 +48,6 @@ public class Johnny {
 
         ui.closeScanner();
     }
-
-    // public void read() {
-    // Scanner sc = new Scanner(System.in);
-    // String input = "";
-
-    // while (true)
-    // {
-    // input = sc.nextLine();
-    // if (input.equals("bye")){
-    // this.storage.save(tasks);
-    // System.out.println(LINE + "\nBye. Hope to see you again!\n" + LINE);
-    // break;
-    // } else if (input.equals("list")) {
-    // System.out.println(this.tasksToString());
-    // } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
-    // String[] strings = input.split(" ");
-    // this.parseMark(strings);
-    // } else if (input.startsWith("todo ")) {
-    // String[] strings = input.split(" ");
-    // this.parseTodo(strings);
-    // } else if (input.startsWith("deadline ")) {
-    // String[] strings = input.split("/by ");
-    // this.parseDeadline(strings);
-    // } else if (input.startsWith("event ")) {
-    // this.parseEvent(input);
-    // } else if (input.startsWith("delete ")) {
-    // this.parseDelete(input);
-    // } else {
-    // System.out.println(LINE + "\n" + "Invalid command." + "\n" + LINE);
-    // }
-    // }
-
-    // sc.close();
-    // }
 
     public static void main(String[] args) {
         System.out.println("Working directory: " + System.getProperty("user.dir"));

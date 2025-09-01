@@ -9,9 +9,6 @@ import johnny.ui.Ui;
  * and exits the program.
  */
 public class ByeCommand extends Command {
-    public ByeCommand() {
-    }
-
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         storage.save(tasks);
