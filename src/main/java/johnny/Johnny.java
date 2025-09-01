@@ -80,6 +80,7 @@ public class Johnny {
     // }
 
     public static void main(String[] args) {
+        System.out.println("Working directory: " + System.getProperty("user.dir"));
         Johnny johnny = new Johnny("data/tasks.txt");
         johnny.run();
     }
