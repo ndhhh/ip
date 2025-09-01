@@ -36,8 +36,9 @@ public class Storage {
     }
 
     /**
-     * Returns an ArrayList<Task> that is populated from reading the filePath of the
-     * storage object.
+     * Returns an ArrayList of Task that is populated from reading the filePath of
+     * the storage object.
+     * 
      * The ui argument refers to a Ui object that prints any errors from parsing the
      * text file.
      * 

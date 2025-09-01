@@ -7,7 +7,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import johnny.tasklist.TaskList;
-import johnny.ui.Ui;
 import johnny.commands.ByeCommand;
 import johnny.commands.Command;
 import johnny.commands.DeadlineCommand;
@@ -19,6 +18,7 @@ import johnny.commands.MarkCommand;
 import johnny.commands.TodoCommand;
 import johnny.commands.UnmarkCommand;
 import johnny.storage.Storage;
+import johnny.ui.Ui;
 
 /**
  * A helper class that provides useful methods to parse a command/date
@@ -62,6 +62,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns a find command after parsing the user input
+     * 
+     * @param input
+     * @param ui
+     * @return A find command if it can be parsed, null otherwise
+     */
     public static Command parseFind(String input, Ui ui) {
         String[] strings = input.split(" ");
         if (strings.length < 2) {
