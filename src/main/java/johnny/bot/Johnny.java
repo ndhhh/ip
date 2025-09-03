@@ -1,4 +1,4 @@
-package johnny;
+package johnny.bot;
 
 import johnny.commands.Command;
 
@@ -47,6 +47,10 @@ public class Johnny {
         }
 
         ui.closeScanner();
+    }
+
+    public String mirrorInput(String input) {
+        return "Johnny heard: " + input;
     }
 
     public static void main(String[] args) {
