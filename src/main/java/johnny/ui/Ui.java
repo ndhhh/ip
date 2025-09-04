@@ -25,8 +25,9 @@ public class Ui {
     /**
      * Prints a new line
      */
-    public void printLine() {
+    public String printLine() {
         System.out.println(LINE);
+        return LINE;
     }
 
     /**
@@ -48,89 +49,78 @@ public class Ui {
         sc.close();
     }
 
-    public void printMessage(String string) {
-        this.printLine();
-        System.out.println(string);
-        this.printLine();
+    public String printMessage(String string) {
+        String msg = string;
+        System.out.println(msg);
+        return msg;
     }
 
-    public void printGreeting() {
-        this.printLine();
-        System.out.println("Hello! I'm " + NAME + "\nWhat can I do for you?");
-        this.printLine();
+    public String printGreeting() {
+        String msg = "Hello! I'm " + NAME + "\nWhat can I do for you?";
+        System.out.println(msg);
+        return msg;
+
     }
 
-    public void printByeMessage() {
-        System.out.println(LINE + "\nBye. Hope to see you again!\n" + LINE);
+    public String printByeMessage() {
+        String msg = "Bye. Hope to see you again!";
+        System.out.println(msg);
+        return msg;
     }
 
-    public void printNumberOfTasks(TaskList tasks) {
+    public String printNumberOfTasks(TaskList tasks) {
+        String msg = "Now you have " + tasks.size() + " tasks in your list.";
         System.out.println("Now you have " + tasks.size() + " tasks in your list.");
+        return msg;
     }
 
-    public void printAddTaskMessage(TaskList tasks, Task t) {
-        this.printLine();
-        System.out.println("Task added: \n" + t.toString() + "\n");
-        this.printNumberOfTasks(tasks);
-        this.printLine();
+    public String printAddTaskMessage(TaskList tasks, Task t) {
+        String msg = "Task added: \n" + t.toString() + "\n" + printNumberOfTasks(tasks);
+        return msg;
     }
 
-    public void printMarkMessage(TaskList tasks, int index) {
-        this.printLine();
-        System.out.println("Marked task as done: ");
-        System.out.println(tasks.getTask(index).toString());
-        this.printLine();
+    public String printMarkMessage(TaskList tasks, int index) {
+        String msg = "Marked task as done: \n" + tasks.getTask(index).toString();
+        return msg;
     }
 
-    public void printUnmarkMessage(TaskList tasks, int index) {
-        this.printLine();
-        System.out.println("Marked task as undone: ");
-        System.out.println(tasks.getTask(index).toString());
-        this.printLine();
+    public String printUnmarkMessage(TaskList tasks, int index) {
+        String msg = "Marked task as undone: \n" + tasks.getTask(index).toString();
+        return msg;
     }
 
-    public void printDeleteMessage(TaskList tasks, Task t) {
-        this.printLine();
-        System.out.println("Task deleted successfully");
-        System.out.println(t.toString());
-        this.printNumberOfTasks(tasks);
-        this.printLine();
+    public String printDeleteMessage(TaskList tasks, Task t) {
+        String msg = "Task deleted successfully.\n" + t.toString() + "\n" + printNumberOfTasks(tasks);
+        return msg;
     }
 
-    public void printTaskList(TaskList tasks) {
-        this.printLine();
-        System.out.println(tasks.toString());
-        this.printLine();
+    public String printTaskList(TaskList tasks) {
+        return tasks.toString();
     }
 
-    public void printInvalidNumberError() {
-        this.printLine();
-        System.out.println("You inputted an invalid number after your command.");
-        this.printLine();
+    public String printInvalidNumberError() {
+        return "You inputted an invalid number after your command.";
     }
 
-    public void printNoNumberError() {
-        System.out.println(LINE + "\nYour command should be accompanied by a number.\n" + LINE);
+    public String printNoNumberError() {
+        return "Your command should be accompanied by a number.";
     }
 
-    public void printNoTaskNameError() {
-        System.out.println(LINE + "\nThe description of a task cannot be empty\n" + LINE);
+    public String printNoTaskNameError() {
+        return "The description of a task cannot be empty";
     }
 
-    public void printNoFindDescriptionError() {
-        System.out.println(LINE + "\nThe description of a task you are finding cannot be empty\n" + LINE);
+    public String printNoFindDescriptionError() {
+        return "The description of a task you are finding cannot be empty";
     }
 
-    public void printDeadlineError() {
-        System.out.println(LINE
-                + "\nThere is no/more than 1 deadline provided.\nPlease use the format: deadline [task name] /by [deadline]\n"
-                + LINE);
+    public String printDeadlineError() {
+        return "There is no/more than 1 deadline provided.\\n" + //
+                "Please use the format: deadline [task name] /by [deadline]";
     }
 
-    public void printDateError() {
-        this.printLine();
-        System.out.println("Invalid date format used. Please follow this format: [dd/MM/yyyy]");
-        this.printLine();
+    public String printDateError() {
+        return "Invalid date format used. Please follow this format: [dd/MM/yyyy]";
     }
 
     /**
@@ -138,9 +128,7 @@ public class Ui {
      * 
      * @param e The exception thrown by the parser
      */
-    public void printDateTimeException(Exception e) {
-        this.printLine();
-        System.out.println("Problem with parsing date/time: " + e.getMessage());
-        this.printLine();
+    public String printDateTimeException(Exception e) {
+        return "Problem with parsing date/time: " + e.getMessage();
     }
 }

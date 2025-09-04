@@ -1,5 +1,3 @@
-T|1|Touch
-D|0|CS2103T|29/08/2025
+D|1|CS2103T|29/08/2025
 E|1|Tiktok hackathon meetup|25/08/2025 12:00|17:00
-T|1|Smell
-D|0|2103T Week 4|07/09/2025
+D|1|2103T Week 4|07/09/2025
