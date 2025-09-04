@@ -22,12 +22,12 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         String tasksString = tasks.findTasksToString(subString);
         if (tasksString.length() == 0) {
-            ui.printMessage("No matching tasks found!");
+            return ui.printMessage("No matching tasks found!");
         } else {
-            ui.printMessage(tasksString);
+            return ui.printMessage(tasksString);
         }
     }
 

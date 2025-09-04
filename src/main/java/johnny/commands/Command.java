@@ -16,8 +16,10 @@ public abstract class Command {
      * @param tasks   The task list of Johnny
      * @param ui      The ui class for printing messages and errors
      * @param storage The storage instance to save tasks
+     * 
+     * @return A string message to be displayed in the GUI
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
 
     /**
      * Returns true if the command is a ByeCommand

@@ -49,6 +49,19 @@ public class Johnny {
         ui.closeScanner();
     }
 
+    /**
+     * Parses the input by the user and returns a string response to
+     * be fed to the GUI.
+     * 
+     * @param input User input in the text field in the GUI
+     * @return String to be displayed in a dialog box in the GUI
+     */
+    public String generateResponse(String input) {
+        Command command = Parser.read(input, this.storage, this.tasks, this.ui);
+        String msg = command.execute(this.tasks, this.ui, this.storage);
+        return msg;
+    }
+
     public String mirrorInput(String input) {
         return "Johnny heard: " + input;
     }

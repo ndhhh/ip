@@ -36,10 +36,10 @@ public class DeadlineCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         Task newTask = new DeadlineTask(this.name, this.deadline);
         tasks.addTask(newTask);
-        ui.printAddTaskMessage(tasks, newTask);
+        return ui.printAddTaskMessage(tasks, newTask);
     }
 
     @Override

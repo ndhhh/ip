@@ -21,13 +21,12 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (index < 0 || index >= tasks.size()) {
-            ui.printInvalidNumberError();
-            return;
+            return ui.printInvalidNumberError();
         }
         tasks.markComplete(this.index);
-        ui.printMarkMessage(tasks, this.index);
+        return ui.printMarkMessage(tasks, this.index);
     }
 
     @Override

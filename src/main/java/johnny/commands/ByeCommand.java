@@ -10,9 +10,9 @@ import johnny.ui.Ui;
  */
 public class ByeCommand extends Command {
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         storage.save(tasks);
-        ui.printByeMessage();
+        return ui.printByeMessage();
     }
 
     @Override

@@ -45,7 +45,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = johnny.mirrorInput(input);
+        String response = johnny.generateResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getJohnnyDialog(response, dukeImage));

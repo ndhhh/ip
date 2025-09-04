@@ -11,6 +11,7 @@ import johnny.commands.ByeCommand;
 import johnny.commands.Command;
 import johnny.commands.DeadlineCommand;
 import johnny.commands.DeleteCommand;
+import johnny.commands.ErrorCommand;
 import johnny.commands.EventCommand;
 import johnny.commands.FindCommand;
 import johnny.commands.ListCommand;
@@ -57,8 +58,8 @@ public class Parser {
         } else if (input.startsWith("find ")) {
             return Parser.parseFind(input, ui);
         } else {
-            System.out.println(LINE + "\n" + "Invalid command." + "\n" + LINE);
-            return null;
+            String msg = "Invalid command.";
+            return new ErrorCommand(msg);
         }
     }
 
@@ -72,8 +73,8 @@ public class Parser {
     public static Command parseFind(String input, Ui ui) {
         String[] strings = input.split(" ");
         if (strings.length < 2) {
-            ui.printNoTaskNameError();
-            return null;
+            String msg = ui.printNoTaskNameError();
+            return new ErrorCommand(msg);
         }
 
         String searchString = input.substring(5);
@@ -90,8 +91,8 @@ public class Parser {
     public static Command parseDelete(String input, Ui ui) {
         String[] strings = input.split(" ");
         if (strings.length != 2) {
-            ui.printNoNumberError();
-            return null;
+            String msg = ui.printNoNumberError();
+            return new ErrorCommand(msg);
         }
 
         int num = 0;
@@ -100,8 +101,8 @@ public class Parser {
             num = Integer.parseInt(strings[1]);
             num = num - 1;
         } catch (NumberFormatException e) {
-            ui.printInvalidNumberError();
-            return null;
+            String msg = ui.printInvalidNumberError();
+            return new ErrorCommand(msg);
         }
 
         return new DeleteCommand(num);
@@ -117,26 +118,23 @@ public class Parser {
     public static Command parseEvent(String input, Ui ui) {
         String[] firstParse = input.split("/to ");
         if (firstParse.length != 2) {
-            System.out.println(LINE
-                    + "\nThere is no/more than 1 event end time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
-                    + LINE);
-            return null;
+            String msg = "There is no/more than 1 event end time provided.\\n" + //
+                    "Please use the format: event [task name] /from [start time] /to [end time]";
+            return new ErrorCommand(msg);
         }
 
         String[] secondParse = firstParse[0].split("/from ");
         if (secondParse.length != 2) {
-            System.out.println(LINE
-                    + "\nThere is no/more than 1 event start time provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
-                    + LINE);
-            return null;
+            String msg = "There is no/more than 1 event start time provided.\\n" + //
+                    "Please use the format: event [task name] /from [start time] /to [end time]";
+            return new ErrorCommand(msg);
         }
 
         String[] eventName = secondParse[0].split(" ");
         if (eventName.length < 2) {
-            System.out.println(LINE
-                    + "\nThere is no/more than 1 event name provided.\nPlease use the format: event [task name] /from [start time] /to [end time]\n"
-                    + LINE);
-            return null;
+            String msg = "There is no/more than 1 event name provided.\\n" + //
+                    "Please use the format: event [task name] /from [start time] /to [end time]";
+            return new ErrorCommand(msg);
         }
 
         StringBuilder taskName = new StringBuilder();
@@ -154,8 +152,8 @@ public class Parser {
             LocalTime end = LocalTime.parse(firstParse[1].trim(), tFormatter);
             return new EventCommand(taskName.toString(), start, end);
         } catch (DateTimeException e) {
-            ui.printDateTimeException(e);
-            return null;
+            String msg = ui.printDateTimeException(e);
+            return new ErrorCommand(msg);
         }
     }
 
@@ -170,14 +168,14 @@ public class Parser {
         String[] strings = input.split("/by ");
 
         if (strings.length != 2) {
-            ui.printDeadlineError();
-            return null;
+            String msg = ui.printDeadlineError();
+            return new ErrorCommand(msg);
         }
 
         String[] firstHalf = strings[0].split(" ");
         if (firstHalf.length < 2) {
-            ui.printNoTaskNameError();
-            return null;
+            String msg = ui.printNoTaskNameError();
+            return new ErrorCommand(msg);
         }
 
         StringBuilder taskName = new StringBuilder();
@@ -190,8 +188,8 @@ public class Parser {
 
         String[] secondHalf = strings[1].trim().split("/");
         if (secondHalf.length != 3) {
-            ui.printDateError();
-            return null;
+            String msg = ui.printDateError();
+            return new ErrorCommand(msg);
         }
 
         try {
@@ -199,8 +197,8 @@ public class Parser {
             LocalDate deadline = LocalDate.parse(strings[1].trim(), formatter);
             return new DeadlineCommand(taskName.toString(), deadline);
         } catch (DateTimeException e) {
-            ui.printDateTimeException(e);
-            return null;
+            String msg = ui.printDateTimeException(e);
+            return new ErrorCommand(msg);
         }
     }
 
@@ -215,8 +213,8 @@ public class Parser {
         String[] strings = input.split(" ");
 
         if (strings.length < 2) {
-            ui.printNoTaskNameError();
-            return null;
+            String msg = ui.printNoTaskNameError();
+            return new ErrorCommand(msg);
         }
 
         StringBuilder taskName = new StringBuilder();
@@ -241,8 +239,8 @@ public class Parser {
         String[] strings = input.split(" ");
 
         if (strings.length != 2) {
-            ui.printNoNumberError();
-            return null;
+            String msg = ui.printNoNumberError();
+            return new ErrorCommand(msg);
         }
 
         int num = 0;
@@ -251,8 +249,8 @@ public class Parser {
             num = Integer.parseInt(strings[1]);
             num = num - 1;
         } catch (NumberFormatException e) {
-            ui.printInvalidNumberError();
-            return null;
+            String msg = ui.printInvalidNumberError();
+            return new ErrorCommand(msg);
         }
 
         if (strings[0].equals("mark")) {
