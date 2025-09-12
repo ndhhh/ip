@@ -57,18 +57,22 @@ public class Johnny {
      * @return String to be displayed in a dialog box in the GUI
      */
     public String generateResponse(String input) {
+        assert this.storage != null : "Storage cannot be null";
+        assert this.tasks != null : "Task list cannot be null";
+        assert this.ui != null : "UI cannot be null";
+        assert input != null : "User input cannot be null";
         Command command = Parser.read(input, this.storage, this.tasks, this.ui);
+        assert command != null : "Returned command should not be null";
         String msg = command.execute(this.tasks, this.ui, this.storage);
+        assert msg != null : "Returned message should not be null";
+        assert !msg.isEmpty() : "Returned message should not be empty.";
         return msg;
-    }
-
-    public String mirrorInput(String input) {
-        return "Johnny heard: " + input;
     }
 
     public static void main(String[] args) {
         System.out.println("Working directory: " + System.getProperty("user.dir"));
         Johnny johnny = new Johnny("data/tasks.txt");
+        assert johnny != null : "Johnny should not be null";
         johnny.run();
     }
 }

@@ -39,8 +39,14 @@ public class Parser {
      *         be parsed
      */
     public static Command read(String input, Storage storage, TaskList tasks, Ui ui) {
+        assert input != null : "Input by user cannot be null";
+        assert storage != null : "Storage cannot be null";
+        assert tasks != null : "Task List cannot be null";
+        assert ui != null : "UI cannot be null";
+
         if (input == null) {
-            return null;
+            String msg = "Null input.";
+            return new ErrorCommand(msg);
         } else if (input.equals("bye")) {
             return new ByeCommand();
         } else if (input.equals("list")) {
