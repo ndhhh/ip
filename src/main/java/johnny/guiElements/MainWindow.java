@@ -44,8 +44,12 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert johnny != null : "Johnny cannot be null";
         String input = userInput.getText();
         String response = johnny.generateResponse(input);
+        assert input != null : "User input cannot be null";
+        assert response != null : "Johnny's reponse cannot be null";
+        assert !response.isEmpty() : "Johnny's response cannot be null";
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getJohnnyDialog(response, dukeImage));

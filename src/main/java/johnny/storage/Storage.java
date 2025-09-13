@@ -48,6 +48,7 @@ public class Storage {
      * @see TaskList
      */
     public ArrayList<Task> load(Ui ui) {
+        assert ui != null : "UI cannot be null";
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(this.filePath);
 
@@ -116,6 +117,9 @@ public class Storage {
      * @see TaskList
      */
     public void save(TaskList tasks) {
+
+        assert tasks != null : "Task list should not be null";
+
         File file = new File(this.filePath);
 
         if (!file.exists()) {
