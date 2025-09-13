@@ -69,6 +69,10 @@ public class Johnny {
         return msg;
     }
 
+    public String greeting() {
+        return this.ui.printGreeting();
+    }
+
     public static void main(String[] args) {
         System.out.println("Working directory: " + System.getProperty("user.dir"));
         Johnny johnny = new Johnny("data/tasks.txt");

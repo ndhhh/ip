@@ -1,4 +1,4 @@
-package johnny.guiElements;
+package johnny.guielements;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,21 +25,21 @@ public class MainWindow extends AnchorPane {
     private Johnny johnny;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/agni.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/gengar.png"));
+    private Image johnnyImage = new Image(this.getClass().getResourceAsStream("/images/gengar.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the johnny instance */
     public void setJohnny(Johnny j) {
         johnny = j;
     }
 
     /**
      * Creates two dialog boxes, one echoing user input and the other containing
-     * Duke's reply and then appends them to
+     * johnny's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -52,7 +52,16 @@ public class MainWindow extends AnchorPane {
         assert !response.isEmpty() : "Johnny's response cannot be null";
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJohnnyDialog(response, dukeImage));
+                DialogBox.getJohnnyDialog(response, johnnyImage));
+        userInput.clear();
+    }
+
+    @FXML
+    public void greeting() {
+        assert johnny != null : "Johnny cannot be null";
+        String greeting = johnny.greeting();
+        dialogContainer.getChildren().addAll(
+                DialogBox.getJohnnyDialog(greeting, johnnyImage));
         userInput.clear();
     }
 }

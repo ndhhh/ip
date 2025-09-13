@@ -14,6 +14,7 @@ import johnny.commands.DeleteCommand;
 import johnny.commands.ErrorCommand;
 import johnny.commands.EventCommand;
 import johnny.commands.FindCommand;
+import johnny.commands.HelpCommand;
 import johnny.commands.ListCommand;
 import johnny.commands.MarkCommand;
 import johnny.commands.PeriodCommand;
@@ -49,6 +50,8 @@ public class Parser {
             return new ByeCommand();
         } else if (input.equals("list")) {
             return new ListCommand();
+        } else if (input.equals("help")) {
+            return new HelpCommand();
         } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
             return Parser.parseMark(input, ui);
         } else if (input.startsWith("todo ")) {

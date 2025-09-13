@@ -1,4 +1,4 @@
-package johnny.guiElements;
+package johnny.guielements;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -5,16 +5,10 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import johnny.guiElements.DialogBox;
-import johnny.guiElements.MainWindow;
 import johnny.bot.Johnny;
+import johnny.guielements.MainWindow;
 
 public class Gui extends Application {
 
@@ -27,7 +21,8 @@ public class Gui extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setJohnny(johnny); // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setJohnny(johnny); // inject the Johnny instance
+            fxmlLoader.<MainWindow>getController().greeting(); // Show dialog box with greeting
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

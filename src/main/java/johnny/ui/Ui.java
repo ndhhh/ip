@@ -56,10 +56,28 @@ public class Ui {
     }
 
     public String printGreeting() {
-        String msg = "Hello! I'm " + NAME + "\nWhat can I do for you?";
-        System.out.println(msg);
+        String msg = "Hello! I'm " + NAME + ", your friendly reminder bot.\n" +
+                "If it's your first time here with me, type \'help\' for a list of commands";
         return msg;
+    }
 
+    public String printHelpMessage() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Here is a list of commands:\n\n");
+        stringBuilder.append("list\nLists your current tasks.\n\n");
+        stringBuilder.append("bye\nSaves your tasks.\n\n");
+        stringBuilder.append("todo [task name]\nAdds a Todo task.\n\n");
+        stringBuilder
+                .append("deadline [task name] /by [dd/MM/yyyy]\nAdds a deadline task with the specified date.\n\n");
+        stringBuilder.append(
+                "event [task name] /from [dd/MM/yyyy] /to [dd/MM/yyyy HH:mm]\nAdds an event task with the start and end dates/times.\n\n");
+        stringBuilder.append(
+                "period [task name] /between [date] /and [date]\nAdds a do within period task with star and end dates.\n\n");
+        stringBuilder.append("mark / unmark [number]\nMarks / unmarks a specified task as done.\n\n");
+        stringBuilder.append("delete [number]\nDeletes a task at the specified spot in the list.\n\n");
+        stringBuilder.append("find [text]\nFinds all tasks that contain the specified text in their names.\n\n");
+
+        return stringBuilder.toString();
     }
 
     public String printByeMessage() {
