@@ -1,10 +1,12 @@
 package johnny.tasks;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * A Task that refers to a particular event that falls on a day with a start and end time.
+ * A Task that refers to a particular event that falls on a day with a start and
+ * end time.
  */
 public class EventTask extends Task {
     protected LocalDateTime start;
@@ -15,7 +17,9 @@ public class EventTask extends Task {
     protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     /**
-     * Creates a new EventTask with the given name, start date and time, and the end time
+     * Creates a new EventTask with the given name, start date and time, and the end
+     * time
+     * 
      * @param name
      * @param start
      * @param end
@@ -26,17 +30,18 @@ public class EventTask extends Task {
         this.end = end;
         this.formattedStart = start.format(dateTimeFormatter);
         this.formattedEnd = end.format(timeFormatter);
-    }  
+    }
 
     /**
      * Creates a new EventTask with the given boolean on whether it is done
+     * 
      * @param name
      * @param completed
      * @param start
      * @param end
      */
-    public EventTask(String name, boolean completed, LocalDateTime start, LocalTime end) {
-        super(name, completed);
+    public EventTask(String name, boolean isCompleted, LocalDateTime start, LocalTime end) {
+        super(name, isCompleted);
         this.start = start;
         this.end = end;
         this.formattedStart = start.format(dateTimeFormatter);
@@ -51,15 +56,16 @@ public class EventTask extends Task {
         return this.end;
     }
 
-    @Override 
+    @Override
     public String getStoredString() {
-        if (completed) return "E|1|" + this.name + "|" + this.formattedStart + "|" + this.formattedEnd;
+        if (isCompleted)
+            return "E|1|" + this.name + "|" + this.formattedStart + "|" + this.formattedEnd;
         return "E|0|" + this.name + "|" + this.formattedStart + "|" + this.formattedEnd;
     }
 
-    @Override 
+    @Override
     public String toString() {
-        if (this.completed) {
+        if (this.isCompleted) {
             return "[D][X] " + super.name + " (from: " + this.formattedStart + " to: " + this.formattedEnd + ")";
         } else {
             return "[D][ ] " + super.name + " (from: " + this.formattedStart + " to: " + this.formattedEnd + ")";

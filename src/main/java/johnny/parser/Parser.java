@@ -25,9 +25,6 @@ import johnny.ui.Ui;
  * A helper class that provides useful methods to parse a command/date
  */
 public class Parser {
-
-    private static final String LINE = "__________________________________________________";
-
     /**
      * Returns a Command based off the user input
      * 
@@ -122,25 +119,21 @@ public class Parser {
      * @return A event commmand if it can be parsed, null otherwise
      */
     public static Command parseEvent(String input, Ui ui) {
+        String errorMsg = "Invalid event name / date / time specified.\n" +
+                "Please use the format: event [task name] /from [start time] /to [end time]";
         String[] firstParse = input.split("/to ");
         if (firstParse.length != 2) {
-            String msg = "There is no/more than 1 event end time provided.\\n" + //
-                    "Please use the format: event [task name] /from [start time] /to [end time]";
-            return new ErrorCommand(msg);
+            return new ErrorCommand(errorMsg);
         }
 
         String[] secondParse = firstParse[0].split("/from ");
         if (secondParse.length != 2) {
-            String msg = "There is no/more than 1 event start time provided.\\n" + //
-                    "Please use the format: event [task name] /from [start time] /to [end time]";
-            return new ErrorCommand(msg);
+            return new ErrorCommand(errorMsg);
         }
 
         String[] eventName = secondParse[0].split(" ");
         if (eventName.length < 2) {
-            String msg = "There is no/more than 1 event name provided.\\n" + //
-                    "Please use the format: event [task name] /from [start time] /to [end time]";
-            return new ErrorCommand(msg);
+            return new ErrorCommand(errorMsg);
         }
 
         StringBuilder taskName = new StringBuilder();

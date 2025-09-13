@@ -53,50 +53,33 @@ public class Storage {
         File file = new File(this.filePath);
 
         if (!file.exists()) {
-            // if the file doesn't exist, i.e. on first run of program,
-            // create a new file
-            try {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-            } catch (SecurityException | IOException e) {
-                System.out.println("Error creating task file: " + e.getMessage());
-            }
-
+            this.createNewFile(ui, file);
             return tasks; // return empty arraylist as no initial file was present
         }
 
+        this.parseTasks(ui, file, tasks);
+
+        return tasks;
+    }
+
+    private void createNewFile(Ui ui, File file) {
+        // if the file doesn't exist, i.e. on first run of program,
+        // create a new file
+        try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        } catch (SecurityException | IOException e) {
+            System.out.println("Error creating task file: " + e.getMessage());
+        }
+    }
+
+    private void parseTasks(Ui ui, File file, ArrayList<Task> tasks) {
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
                 // While there are still lines to read, parse the lines into tasks
                 String nextLine = sc.nextLine();
                 String[] strings = nextLine.split("\\|");
-                String typeOfTask = strings[0];
-                boolean completed = strings[1].equals("1");
-                String taskName = strings[2];
-
-                switch (typeOfTask) {
-                    case "T":
-                        tasks.add(new TodoTask(taskName, completed));
-                        break;
-
-                    case "D":
-                        String deadline = strings[3];
-                        LocalDate date = Parser.parseDate(deadline, ui);
-                        if (date != null) {
-                            tasks.add(new DeadlineTask(taskName, completed, date));
-                        }
-                        break;
-
-                    case "E":
-                        String start = strings[3];
-                        LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
-                        String end = strings[4];
-                        LocalTime endTime = Parser.parseTime(end, ui);
-                        if (startDateTime != null && endTime != null) {
-                            tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
-                        }
-                        break;
-                }
+                this.addTasks(ui, tasks, strings);
             }
 
             sc.close();
@@ -104,8 +87,36 @@ public class Storage {
         } catch (IOException | NoSuchElementException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
+    }
 
-        return tasks;
+    private void addTasks(Ui ui, ArrayList<Task> tasks, String[] strings) {
+        String typeOfTask = strings[0];
+        boolean completed = strings[1].equals("1");
+        String taskName = strings[2];
+
+        switch (typeOfTask) {
+            case "T":
+                tasks.add(new TodoTask(taskName, completed));
+                break;
+
+            case "D":
+                String deadline = strings[3];
+                LocalDate date = Parser.parseDate(deadline, ui);
+                if (date != null) {
+                    tasks.add(new DeadlineTask(taskName, completed, date));
+                }
+                break;
+
+            case "E":
+                String start = strings[3];
+                LocalDateTime startDateTime = Parser.parseDateTime(start, ui);
+                String end = strings[4];
+                LocalTime endTime = Parser.parseTime(end, ui);
+                if (startDateTime != null && endTime != null) {
+                    tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                }
+                break;
+        }
     }
 
     /**

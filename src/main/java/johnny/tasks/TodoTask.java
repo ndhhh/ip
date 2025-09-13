@@ -14,14 +14,14 @@ public class TodoTask extends Task {
 
     @Override
     public String getStoredString() {
-        if (completed)
+        if (isCompleted)
             return "T|1|" + this.name;
         return "T|0|" + this.name;
     }
 
     @Override
     public String toString() {
-        if (this.completed) {
+        if (this.isCompleted) {
             return "[T][X] " + super.name;
         } else {
             return "[T][ ] " + super.name;
