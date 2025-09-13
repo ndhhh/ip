@@ -18,7 +18,7 @@ public class EventTask extends Task {
 
     /**
      * Creates a new EventTask with the given name, start date and time, and the end
-     * time
+     * time.
      * 
      * @param name
      * @param start

@@ -14,6 +14,7 @@ import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
 import johnny.tasks.EventTask;
+import johnny.tasks.PeriodTask;
 import johnny.tasks.Task;
 import johnny.tasks.TodoTask;
 import johnny.ui.Ui;
@@ -62,6 +63,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Creates a new file if the target file does not exist
+     * 
+     * @param ui   UI object for printing errors
+     * @param file File object to be created
+     */
     private void createNewFile(Ui ui, File file) {
         // if the file doesn't exist, i.e. on first run of program,
         // create a new file
@@ -73,6 +80,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Parse through lines in a .txt file to get tasks
+     * 
+     * @param ui    UI object for printing errors
+     * @param file  File to be parsed
+     * @param tasks ArrayList<Task> to be populated with tasks
+     */
     private void parseTasks(Ui ui, File file, ArrayList<Task> tasks) {
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
@@ -89,6 +103,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Add a task to an ArrayList<Task> based on the line parsed
+     * 
+     * @param ui      UI object for printing errors
+     * @param tasks   ArrayList<Task> to be populated
+     * @param strings String array of task information
+     */
     private void addTasks(Ui ui, ArrayList<Task> tasks, String[] strings) {
         String typeOfTask = strings[0];
         boolean completed = strings[1].equals("1");
@@ -114,6 +135,16 @@ public class Storage {
                 LocalTime endTime = Parser.parseTime(end, ui);
                 if (startDateTime != null && endTime != null) {
                     tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                }
+                break;
+
+            case "P":
+                String startString = strings[3];
+                LocalDate startDate = Parser.parseDate(startString, ui);
+                String endString = strings[4];
+                LocalDate endDate = Parser.parseDate(endString, ui);
+                if (startDate != null && endDate != null) {
+                    tasks.add(new PeriodTask(taskName, completed, startDate, endDate));
                 }
                 break;
         }

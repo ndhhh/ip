@@ -16,6 +16,7 @@ import johnny.commands.EventCommand;
 import johnny.commands.FindCommand;
 import johnny.commands.ListCommand;
 import johnny.commands.MarkCommand;
+import johnny.commands.PeriodCommand;
 import johnny.commands.TodoCommand;
 import johnny.commands.UnmarkCommand;
 import johnny.storage.Storage;
@@ -60,6 +61,8 @@ public class Parser {
             return Parser.parseDelete(input, ui);
         } else if (input.startsWith("find ")) {
             return Parser.parseFind(input, ui);
+        } else if (input.startsWith("period ")) {
+            return Parser.parsePeriod(input, ui);
         } else {
             String msg = "Invalid command.";
             return new ErrorCommand(msg);
@@ -150,6 +153,50 @@ public class Parser {
             LocalDateTime start = LocalDateTime.parse(secondParse[1].trim(), dtFormatter);
             LocalTime end = LocalTime.parse(firstParse[1].trim(), tFormatter);
             return new EventCommand(taskName.toString(), start, end);
+        } catch (DateTimeException e) {
+            String msg = ui.printDateTimeException(e);
+            return new ErrorCommand(msg);
+        }
+    }
+
+    /**
+     * Returns a Period command after parsing the user input
+     * 
+     * @param input
+     * @param ui
+     * @return A period command if it can be parsed, Error command otherwise.
+     */
+    public static Command parsePeriod(String input, Ui ui) {
+        String errorMsg = "Invalid task name / date / time specified.\n" +
+                "Please use the format: period [task name] /between [start time] /and [end time]";
+        String[] firstParse = input.split("/and ");
+        if (firstParse.length != 2) {
+            return new ErrorCommand(errorMsg);
+        }
+
+        String[] secondParse = firstParse[0].split("/between ");
+        if (secondParse.length != 2) {
+            return new ErrorCommand(errorMsg);
+        }
+
+        String[] eventName = secondParse[0].split(" ");
+        if (eventName.length < 2) {
+            return new ErrorCommand(errorMsg);
+        }
+
+        StringBuilder taskName = new StringBuilder();
+        for (int i = 1; i < eventName.length; i++) {
+            taskName.append(eventName[i]);
+            if (i < eventName.length - 1) {
+                taskName.append(" ");
+            }
+        }
+
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate start = LocalDate.parse(secondParse[1].trim(), dateFormatter);
+            LocalDate end = LocalDate.parse(firstParse[1].trim(), dateFormatter);
+            return new PeriodCommand(taskName.toString(), start, end);
         } catch (DateTimeException e) {
             String msg = ui.printDateTimeException(e);
             return new ErrorCommand(msg);
