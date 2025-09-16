@@ -33,6 +33,10 @@ public class Johnny {
         try {
             this.tasks = new TaskList(this.storage.load(this.ui));
         } catch (JohnnyException e) {
+            /**
+             * Used chatgpt to help with creating a callback to the GUI MainWindow
+             * controller to pass error messages to be displayed on the GUI.
+             */
             // If exception caught when loading, print the message in the callback
             assert guiErrorCallback != null : "Callback cannot be null";
             this.guiErrorCallback.accept(e.getMessage());
