@@ -64,4 +64,10 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getJohnnyDialog(greeting, johnnyImage));
         userInput.clear();
     }
+
+    @FXML
+    public void showError(String msg) {
+        dialogContainer.getChildren().add(
+                DialogBox.getJohnnyDialog(msg, johnnyImage));
+    }
 }

@@ -1,5 +1,7 @@
 package johnny.bot;
 
+import java.util.function.Consumer;
+
 import johnny.commands.Command;
 
 import johnny.parser.Parser;
@@ -14,39 +16,21 @@ public class Johnny {
     private Ui ui;
     private TaskList tasks;
     private Storage storage;
+    private Consumer<String> guiErrorCallback;
 
     /**
      * Creates a new instance of Johnny with the specified file path to read and
      * write from storage
      * 
-     * @param filePath File path of storage text file
+     * @param filePath         File path of storage text file
+     * @param guiErrorCallback For calling to the GUI show error function to display
+     *                         an error
      */
-    public Johnny(String filePath) {
+    public Johnny(String filePath, Consumer<String> guiErrorCallback) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
+        this.guiErrorCallback = guiErrorCallback;
         this.tasks = new TaskList(this.storage.load(this.ui));
-    }
-
-    /**
-     * Runs the bot, starts by printing a greeting. The other packages like Ui
-     * handle the reading of commands
-     * or parsing and storing and saving tasks
-     */
-    public void run() {
-        this.ui.printGreeting();
-        boolean isBye = false;
-        while (!isBye) {
-            String fullCommand = ui.readCommand();
-            // ui.printLine();
-            Command command = Parser.read(fullCommand, this.storage, this.tasks, this.ui);
-            if (command != null) {
-                command.execute(this.tasks, this.ui, this.storage);
-                isBye = command.isBye();
-            }
-            // ui.printLine();
-        }
-
-        ui.closeScanner();
     }
 
     /**
@@ -71,12 +55,5 @@ public class Johnny {
 
     public String greeting() {
         return this.ui.printGreeting();
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Working directory: " + System.getProperty("user.dir"));
-        Johnny johnny = new Johnny("data/tasks.txt");
-        assert johnny != null : "Johnny should not be null";
-        johnny.run();
     }
 }
