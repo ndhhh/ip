@@ -27,6 +27,7 @@ public class Gui extends Application {
             fxmlLoader.<MainWindow>getController().greeting(); // Show dialog box with greeting
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setTitle("Johnny");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
