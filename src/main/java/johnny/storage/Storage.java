@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import johnny.exception.JohnnyException;
 import johnny.parser.Parser;
 import johnny.tasklist.TaskList;
 import johnny.tasks.DeadlineTask;
@@ -46,9 +47,11 @@ public class Storage {
      * @param ui Ui object that prints any errors from parsing the text file / text
      *           interactions with the user
      * @return an ArrayList<Task> that is passed into a TaskList
+     * @throws JohnnyException A custom exception thrown if tasks cannot
+     *                         be parsed/added
      * @see TaskList
      */
-    public ArrayList<Task> load(Ui ui) {
+    public ArrayList<Task> load(Ui ui) throws JohnnyException {
         assert ui != null : "UI cannot be null";
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(this.filePath);
@@ -68,15 +71,17 @@ public class Storage {
      * 
      * @param ui   UI object for printing errors
      * @param file File object to be created
+     * @throws JohnnyException A custom exception thrown if file cannot be created
      */
-    private void createNewFile(Ui ui, File file) {
+    private void createNewFile(Ui ui, File file) throws JohnnyException {
         // if the file doesn't exist, i.e. on first run of program,
         // create a new file
         try {
             file.getParentFile().mkdirs();
             file.createNewFile();
         } catch (SecurityException | IOException e) {
-            System.out.println("Error creating task file: " + e.getMessage());
+            String msg = "Error creating task file: " + e.getMessage();
+            throw new JohnnyException(msg);
         }
     }
 
@@ -86,8 +91,10 @@ public class Storage {
      * @param ui    UI object for printing errors
      * @param file  File to be parsed
      * @param tasks ArrayList<Task> to be populated with tasks
+     * @throws JohnnyException A custom exception thrown if tasks cannot be read by
+     *                         scanner
      */
-    private void parseTasks(Ui ui, File file, ArrayList<Task> tasks) {
+    private void parseTasks(Ui ui, File file, ArrayList<Task> tasks) throws JohnnyException {
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
                 // While there are still lines to read, parse the lines into tasks
@@ -99,7 +106,8 @@ public class Storage {
             sc.close();
 
         } catch (IOException | NoSuchElementException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            String msg = "Error reading from file: " + e.getMessage();
+            throw new JohnnyException(msg);
         }
     }
 
@@ -109,8 +117,10 @@ public class Storage {
      * @param ui      UI object for printing errors
      * @param tasks   ArrayList<Task> to be populated
      * @param strings String array of task information
+     * @throws JohnnyException A custom exception thrown if tasks cannot be
+     *                         parsed/added
      */
-    private void addTasks(Ui ui, ArrayList<Task> tasks, String[] strings) {
+    private void addTasks(Ui ui, ArrayList<Task> tasks, String[] strings) throws JohnnyException {
         String typeOfTask = strings[0];
         boolean completed = strings[1].equals("1");
         String taskName = strings[2];
@@ -125,6 +135,9 @@ public class Storage {
                 LocalDate date = Parser.parseDate(deadline, ui);
                 if (date != null) {
                     tasks.add(new DeadlineTask(taskName, completed, date));
+                } else {
+                    String msg = "A deadline task could not be parsed!\nCheck that the date is in dd/MM/yyyy.";
+                    throw new JohnnyException(msg);
                 }
                 break;
 
@@ -135,6 +148,10 @@ public class Storage {
                 LocalTime endTime = Parser.parseTime(end, ui);
                 if (startDateTime != null && endTime != null) {
                     tasks.add(new EventTask(taskName, completed, startDateTime, endTime));
+                } else {
+                    String msg = "The start or end date/time of an event task could not be parsed!\n" +
+                            "Check that the date/time is in dd/MM/yyyy or HH:mm respectively.";
+                    throw new JohnnyException(msg);
                 }
                 break;
 
@@ -145,8 +162,16 @@ public class Storage {
                 LocalDate endDate = Parser.parseDate(endString, ui);
                 if (startDate != null && endDate != null) {
                     tasks.add(new PeriodTask(taskName, completed, startDate, endDate));
+                } else {
+                    String msg = "The start or end date of a DoWithinPeriod task could not be parsed!\n" +
+                            "Check that the date is in dd/MM/yyyy.";
+                    throw new JohnnyException(msg);
                 }
                 break;
+
+            default:
+                String msg = "One of the tasks is unknown! Skipping it.";
+                throw new JohnnyException(msg);
         }
     }
 

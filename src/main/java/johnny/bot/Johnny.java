@@ -3,7 +3,7 @@ package johnny.bot;
 import java.util.function.Consumer;
 
 import johnny.commands.Command;
-
+import johnny.exception.JohnnyException;
 import johnny.parser.Parser;
 import johnny.storage.Storage;
 import johnny.tasklist.TaskList;
@@ -30,7 +30,14 @@ public class Johnny {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.guiErrorCallback = guiErrorCallback;
-        this.tasks = new TaskList(this.storage.load(this.ui));
+        try {
+            this.tasks = new TaskList(this.storage.load(this.ui));
+        } catch (JohnnyException e) {
+            // If exception caught when loading, print the message in the callback
+            assert guiErrorCallback != null : "Callback cannot be null";
+            this.guiErrorCallback.accept(e.getMessage());
+            this.tasks = new TaskList();
+        }
     }
 
     /**
