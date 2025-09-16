@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 public class DialogBox extends HBox {
     @FXML
@@ -30,7 +32,7 @@ public class DialogBox extends HBox {
      *             or Johnny's output
      * @param img  Image of either the user or Johnny in the dialog box
      */
-    private DialogBox(String text, Image img) {
+    private DialogBox(String text, Image img, boolean isJohnny) {
         try {
             // Create new fxmlLoader. This will be the controller for the
             // format and hierarchy specified in the fxml file
@@ -43,19 +45,10 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
         dialog.setText(text);
+        if (isJohnny) {
+            dialog.setFont(Font.font("Arial", FontPosture.ITALIC, 11));
+        }
         displayPicture.setImage(img);
-
-        /**
-         * Styling the dialog box, deprecated code.
-         * Using XML for formatting now.
-         * 
-         * text.setWrapText(true);
-         * displayPicture.setFitWidth(100.0);
-         * displayPicture.setFitHeight(100.0);
-         * this.setAlignment(Pos.TOP_RIGHT);
-         * this.getChildren().addAll(text, displayPicture);
-         * 
-         */
 
     }
 
@@ -71,11 +64,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+        return new DialogBox(s, i, false);
     }
 
     public static DialogBox getJohnnyDialog(String s, Image i) {
-        var db = new DialogBox(s, i);
+        var db = new DialogBox(s, i, true);
         db.flip();
         return db;
     }
