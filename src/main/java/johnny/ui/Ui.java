@@ -81,8 +81,9 @@ public class Ui {
     }
 
     public String printByeMessage() {
-        String msg = "Bye. Hope to see you again!";
-        System.out.println(msg);
+        String msg = "Your tasks have been saved!\n"
+                + "Feel free to drop by again for any task related needs\n"
+                + "You can close the window now to exit. Hope to see you again!";
         return msg;
     }
 
