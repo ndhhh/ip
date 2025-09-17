@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import johnny.bot.Johnny;
@@ -27,6 +28,7 @@ public class Gui extends Application {
             fxmlLoader.<MainWindow>getController().greeting(); // Show dialog box with greeting
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/johnny.png")));
             stage.setMinHeight(220);
             stage.setMinWidth(417);
             stage.setTitle("Johnny");
