@@ -1,10 +1,11 @@
 package johnny.tasklist;
+
 import java.util.ArrayList;
 
 import johnny.tasks.Task;
 
 /**
- * A class that wraps an ArrayList<Task>. 
+ * A class that wraps an ArrayList<Task>.
  * This class provides many operations to edit the nested ArrayList
  */
 public class TaskList {
@@ -12,6 +13,7 @@ public class TaskList {
 
     /**
      * Constructs a new TaskList instance using the ArrayList<Task> passed in
+     * 
      * @param tasks ArrayList<Task> to be wrapped in the instance
      */
     public TaskList(ArrayList<Task> tasks) {
@@ -25,8 +27,9 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    /** 
+    /**
      * Gets a Task at the given index of the wrapped ArrayList
+     * 
      * @param index The index to search at
      * @return The task at that index
      */
@@ -62,6 +65,7 @@ public class TaskList {
 
     /**
      * Returns the string format of the task that is used to store in the saved file
+     * 
      * @param index The index to search at
      * @return The stored string format
      */
@@ -70,8 +74,10 @@ public class TaskList {
     }
 
     /**
-     * Returns an ArrayList of tasks that have their name containing the given substring
-     * @param subString 
+     * Returns an ArrayList of tasks that have their name containing the given
+     * substring
+     * 
+     * @param subString
      * @return ArrayList of tasks
      */
     public ArrayList<Task> findTasks(String subString) {
@@ -87,6 +93,7 @@ public class TaskList {
 
     /**
      * Returns a String of tasks that have their name containing the given substring
+     * 
      * @param subString
      * @return String describing all matching tasks
      */
@@ -104,13 +111,14 @@ public class TaskList {
             return "No tasks in list";
         }
 
-        for (int i = 0; i < tasks.size(); i++)
-        {
+        for (int i = 0; i < tasks.size(); i++) {
             int num = i + 1;
             String str = String.format(". %s", tasks.get(i).toString());
             result.append(num);
             result.append(str);
-            result.append("\n");
+            if (i < tasks.size() - 1) {
+                result.append("\n");
+            }
         }
 
         return result.toString();

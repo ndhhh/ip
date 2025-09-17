@@ -8,11 +8,9 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParserTest {
 
@@ -23,7 +21,7 @@ public class ParserTest {
         assertEquals(LocalDate.of(2024, 3, 29), date);
     }
 
-    @Test 
+    @Test
     public void testDelete_validInput() {
         Ui ui = new Ui();
         String input = "delete 4";
@@ -31,23 +29,23 @@ public class ParserTest {
         assertTrue(c instanceof DeleteCommand);
     }
 
-    @Test 
+    @Test
     public void testDelete_invalidInput() {
         Ui ui = new Ui();
         String input = "delete 4.";
         Command c = Parser.parseDelete(input, ui);
-        assertNull(c);
+        assertTrue(c instanceof ErrorCommand);
     }
 
-    @Test 
+    @Test
     public void testDelete_invalidInputFloat() {
         Ui ui = new Ui();
         String input = "delete 0.4";
         Command c = Parser.parseDelete(input, ui);
-        assertNull(c);
+        assertTrue(c instanceof ErrorCommand);
     }
 
-    @Test 
+    @Test
     public void testMark_validInput() {
         Ui ui = new Ui();
         String input = "mark 4";
@@ -55,26 +53,26 @@ public class ParserTest {
         assertTrue(c instanceof MarkCommand);
     }
 
-    @Test 
+    @Test
     public void testMark_invalidInput() {
         Ui ui = new Ui();
         String input = "mark 4.";
         Command c = Parser.parseMark(input, ui);
-        assertNull(c);
+        assertTrue(c instanceof ErrorCommand);
     }
 
-    @Test 
+    @Test
     public void testMark_invalidInputFloat() {
         Ui ui = new Ui();
         String input = "mark 4.0";
         Command c = Parser.parseMark(input, ui);
-        assertNull(c);
+        assertTrue(c instanceof ErrorCommand);
     }
 
     @Test
     public void testEvent_validInput() {
         Ui ui = new Ui();
-        String input =  "event Project meeting /from 25/08/2025 14:00 /to 16:00";
+        String input = "event Project meeting /from 25/08/2025 14:00 /to 16:00";
         Command command = Parser.parseEvent(input, ui);
 
         assertNotNull(command);
@@ -93,7 +91,7 @@ public class ParserTest {
 
         Command command = Parser.parseEvent(input, ui);
 
-        assertNull(command);
+        assertTrue(command instanceof ErrorCommand);
     }
 
     @Test
@@ -118,7 +116,7 @@ public class ParserTest {
 
         Command command = Parser.parseDeadline(input, ui);
 
-        assertNull(command);
+        assertTrue(command instanceof ErrorCommand);
     }
 
     @Test
@@ -142,6 +140,6 @@ public class ParserTest {
 
         Command command = Parser.parseTodo(input, ui);
 
-        assertNull(command);
+        assertTrue(command instanceof ErrorCommand);
     }
 }

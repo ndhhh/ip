@@ -142,23 +142,15 @@ public class Parser {
             return new ErrorCommand(errorMsg);
         }
 
-        StringBuilder taskName = new StringBuilder();
-        for (int i = 1; i < eventName.length; i++) {
-            taskName.append(eventName[i]);
-            if (i < eventName.length - 1) {
-                taskName.append(" ");
-            }
-        }
+        String taskName = Parser.parseName(eventName);
 
-        try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalDateTime start = LocalDateTime.parse(secondParse[1].trim(), dtFormatter);
-            LocalTime end = LocalTime.parse(firstParse[1].trim(), tFormatter);
-            return new EventCommand(taskName.toString(), start, end);
-        } catch (DateTimeException e) {
-            String msg = ui.printDateTimeException(e);
-            return new ErrorCommand(msg);
+        LocalDateTime start = Parser.parseDateTime(secondParse[1].trim(), ui);
+        LocalTime end = Parser.parseTime(firstParse[1], ui);
+
+        if (start != null && end != null) {
+            return new EventCommand(taskName, start, end);
+        } else {
+            return new ErrorCommand(errorMsg);
         }
     }
 
@@ -187,22 +179,14 @@ public class Parser {
             return new ErrorCommand(errorMsg);
         }
 
-        StringBuilder taskName = new StringBuilder();
-        for (int i = 1; i < eventName.length; i++) {
-            taskName.append(eventName[i]);
-            if (i < eventName.length - 1) {
-                taskName.append(" ");
-            }
-        }
+        String taskName = Parser.parseName(eventName);
 
-        try {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate start = LocalDate.parse(secondParse[1].trim(), dateFormatter);
-            LocalDate end = LocalDate.parse(firstParse[1].trim(), dateFormatter);
-            return new PeriodCommand(taskName.toString(), start, end);
-        } catch (DateTimeException e) {
-            String msg = ui.printDateTimeException(e);
-            return new ErrorCommand(msg);
+        LocalDate start = Parser.parseDate(secondParse[1].trim(), ui);
+        LocalDate end = Parser.parseDate(firstParse[1].trim(), ui);
+        if (start != null && end != null) {
+            return new PeriodCommand(taskName, start, end);
+        } else {
+            return new ErrorCommand(errorMsg);
         }
     }
 
@@ -307,6 +291,18 @@ public class Parser {
         } else {
             return new UnmarkCommand(num);
         }
+    }
+
+    private static String parseName(String[] eventName) {
+        StringBuilder taskName = new StringBuilder();
+        for (int i = 1; i < eventName.length; i++) {
+            taskName.append(eventName[i]);
+            if (i < eventName.length - 1) {
+                taskName.append(" ");
+            }
+        }
+
+        return taskName.toString();
     }
 
     /**

@@ -75,7 +75,7 @@ public class Ui {
                 "period [task name] /between [date] /and [date]\nAdds a do within period task with star and end dates.\n\n");
         stringBuilder.append("mark / unmark [number]\nMarks / unmarks a specified task as done.\n\n");
         stringBuilder.append("delete [number]\nDeletes a task at the specified spot in the list.\n\n");
-        stringBuilder.append("find [text]\nFinds all tasks that contain the specified text in their names.\n\n");
+        stringBuilder.append("find [text]\nFinds all tasks that contain the specified text in their names.");
 
         return stringBuilder.toString();
     }
@@ -114,6 +114,7 @@ public class Ui {
     }
 
     public String printTaskList(TaskList tasks) {
+        System.out.println(tasks.toString());
         return tasks.toString();
     }
 
