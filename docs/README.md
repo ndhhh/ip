@@ -194,11 +194,3 @@ find <text>
 
 You should see a list of tasks with names that contain the text you searched for.
 If no such tasks exist, a message `No tasks in list` will be displayed.
-
-Still not convinced? Here are some reviews by people who've used Johnny bot:
-
-> "Bro this bot is legit the best thing that ever happened. There's no better way to organise my island events!" - Jeffrey Epstein
-
-> "Yeah man I agree with Jeff it's pretty good." - Me
-
-What are you waiting for? [DOWNLOAD](https://github.com/ndhhh/ip/releases)
