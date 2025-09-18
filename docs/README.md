@@ -39,7 +39,27 @@ find
 
 You can refer below for some sample usage!
 
-## Adding Todo tasks `todo`
+## Viewing help: `help`
+
+Shows a message explaining all the different commands.
+
+Format: `help`
+
+## Saving changes made to task list: `bye`
+
+Saves all the changes you made to your task list, allowing you to close the program safely.
+
+Format: `bye`
+
+**<ins>Note:</ins>** If you do not run this command and exit the program, your changes will not be saved.
+
+## Listing tasks: `list`
+
+This displays all the current saved tasks in a list.
+
+Format: `list`
+
+## Adding Todo tasks: `todo`
 
 This represents a task that you need to do, with no specific deadlines or timings.
 
@@ -57,7 +77,7 @@ Task added:
 Now you have <number> tasks in your list.
 ```
 
-## Adding deadlines `deadline`
+## Adding deadlines: `deadline`
 
 This represents a task that you need to do by a specified deadline in dd/MM/yyyy.
 
@@ -75,7 +95,25 @@ Task added:
 Now you have <number> tasks in your list.
 ```
 
-## Adding do within period tasks
+## Adding event tasks: `event`
+
+This represents an event that you need to do on a specific date, between 2 timings.
+
+Format:
+
+```
+event <task name> /from <dd/MM/yyyy HH:mm> /to <HH:mm>
+```
+
+After adding this event task, you should expect to see the following in the dialog box.
+
+```
+Task added:
+[E][ ]<task name> from: <dd/MM/yyyy HH:mm> to: <dd/MM/yyyy>
+Now you have <number> tasks in your list.
+```
+
+## Adding do within period tasks: `period`
 
 This represents a task that you need to do within a specified period in dd/MM/yyyy.
 
@@ -89,9 +127,73 @@ After adding this new period task, you should expect to see the following in the
 
 ```
 Task added:
-[D][ ]<Task name> between: <start date> and: <end date>
+[P][ ]<Task name> between: <start date> and: <end date>
 Now you have <number> tasks in your list.
 ```
+
+## Mark / unmarking a task as done: `mark` or `unmark`
+
+This marks/unmarks a task as done.
+
+Format:
+
+```
+mark <number>
+unmark <number>
+```
+
+After marking a task as done, you should expect to see the following in the dialog box.
+
+```
+Marked task as done:
+[<task type>][X]<task name and details>
+```
+
+And the following for unmarking a task.
+
+```
+Marked task as undone:
+[<task type>][X]<task name and details>
+```
+
+**Note:** This command only accepts a number between **1** and the **number of tasks in your list**.
+
+For example: If you have **5** tasks in your list, the command only accepts a number between **1 and 5**.
+
+## Deleting a task: `delete`
+
+This deletes a task from the list.
+
+Format:
+
+```
+delete <number>
+```
+
+After deleting a task, you should expect to see the following in the dialog box.
+
+```
+Task deleted successfully.
+<task details>
+Now you have <number> task in your list.
+```
+
+**Note:** This command only accepts a number between **1** and the **number of tasks in your list**.
+
+For example: If you have **5** tasks in your list, the command only accepts a number between **1 and 5**.
+
+## Finding a task: `find`
+
+This finds all relevant tasks which have names that contain the text you are searching for.
+
+Format:
+
+```
+find <text>
+```
+
+You should see a list of tasks with names that contain the text you searched for.
+If no such tasks exist, a message `No tasks in list` will be displayed.
 
 Still not convinced? Here are some reviews by people who've used Johnny bot:
 
@@ -100,4 +202,3 @@ Still not convinced? Here are some reviews by people who've used Johnny bot:
 > "Yeah man I agree with Jeff it's pretty good." - Me
 
 What are you waiting for? [DOWNLOAD](https://github.com/ndhhh/ip/releases)
-:feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood: :feelsgood:

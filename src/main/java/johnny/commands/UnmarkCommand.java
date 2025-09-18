@@ -27,7 +27,7 @@ public class UnmarkCommand extends Command {
         }
 
         tasks.markIncomplete(this.index);
-        return ui.printMarkMessage(tasks, this.index);
+        return ui.printUnmarkMessage(tasks, this.index);
     }
 
     @Override
